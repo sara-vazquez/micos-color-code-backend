@@ -4,8 +4,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-application.properties
-application.yml
+
 
 ### STS ###
 .apt_generated
@@ -35,5 +34,8 @@ build/
 ### VS Code ###
 .vscode/
 .DS_Store/
+
+application.properties
+application.yml
 
 .env
