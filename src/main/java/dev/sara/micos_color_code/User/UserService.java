@@ -31,9 +31,7 @@ public class UserService {
         UserEntity userToSave = userBuilder.build(request);
 
         UserEntity savedUser = userRepository.save(userToSave);
-        return null;
-
+        
+        return UserMapper.toResponseDTO(savedUser);
     }
-
-    
 }
