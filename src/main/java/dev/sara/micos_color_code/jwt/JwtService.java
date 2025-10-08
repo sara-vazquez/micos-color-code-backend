@@ -1,39 +1,55 @@
 package dev.sara.micos_color_code.jwt;
 
 import java.time.Instant;
-import java.time.temporal.ChronoUnit;
+import java.util.stream.Collectors;
 
-import javax.crypto.spec.SecretKeySpec;
-
-import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.oauth2.jwt.JwtClaimsSet;
+import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
+import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.stereotype.Service;
 
-import dev.sara.micos_color_code.Role.RoleEntity;
+import com.nimbusds.jose.JWSAlgorithm;
+import com.nimbusds.jose.jwk.JWK;
+import com.nimbusds.jose.jwk.JWKSet;
+import com.nimbusds.jose.jwk.OctetSequenceKey;
+import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
+import com.nimbusds.jose.jwk.source.JWKSource;
+import com.nimbusds.jose.proc.SecurityContext;
+
 import dev.sara.micos_color_code.User.UserEntity;
-import lombok.Value;
 
 @Service
 public class JwtService {
 
+    private final NimbusJwtEncoder jwtEncoder;
+
     @Value("${jwt.key}")
-    private String jwtSecretKey;
+    private String jwtSecretKey; 
+
+    public JwtService(@Value("${jwt.key}") String secretKeyBase64) {
+        byte[] keyBytes = java.util.Base64.getDecoder().decode(secretKeyBase64);
+        
+        JWK jwk = new OctetSequenceKey.Builder(keyBytes)
+                .algorithm(JWSAlgorithm.HS512)
+                .build();
+        
+        JWKSource<SecurityContext> jwkSource = new ImmutableJWKSet<>(new JWKSet(jwk));
+        this.jwtEncoder = new NimbusJwtEncoder(jwkSource);
+    }
 
     public String generateToken(UserEntity user) {
-        byte[] keyBytes = java.util.Base64.getDecoder().decode(jwtSecretKey);
-        SecretKeySpec secretKey = new SecretKeySpec(keyBytes, "HmacSHA512");
-
         Instant now = Instant.now();
-        Instant expiry = now.plus(1, ChronoUnit.HOURS); // token valid for an hour
-
-        return Jwts.builder()
-                .setSubject(user.getUsername())
+        JwtClaimsSet claims = JwtClaimsSet.builder()
+                .issuer("tu-app")
+                .issuedAt(now)
+                .expiresAt(now.plusSeconds(3600)) // one hour
+                .subject(user.getUsername())
                 .claim("roles", user.getRoles().stream()
-                        .map(RoleEntity::getName)
-                        .toList())
-                .setIssuedAt(Date.from(now))
-                .setExpiration(Date.from(expiry))
-                .signWith(secretKey, SignatureAlgorithm.HS512)
-                .compact();
+                        .map(r -> r.getName())
+                        .collect(Collectors.toList()))
+                .build();
+
+        return jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
     }
-    
 }

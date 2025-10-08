@@ -1,10 +1,13 @@
 package dev.sara.micos_color_code.auth;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import dev.sara.micos_color_code.Role.RoleRepository;
 import dev.sara.micos_color_code.User.UserRepository;
+import dev.sara.micos_color_code.jwt.JwtService;
 import dev.sara.micos_color_code.register.RegisterRequestDTO;
 import lombok.RequiredArgsConstructor;
 
@@ -31,4 +34,12 @@ public class AuthServiceImpl implements AuthService {
             throw new RuntimeException("Email ya registrado");
         }
     }
+
+
+    //Save user in db
+    userRepository.save(user);
+
+
+    //Generate jwt
+    String token = jwtService.generateToken(user);
 }
