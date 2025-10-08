@@ -5,4 +5,6 @@ import dev.sara.micos_color_code.register.RegisterRequestDTO;
 public interface AuthService {
     AuthResponseDTO register(RegisterRequestDTO request);
     AuthResponseDTO login(AuthRequestDTO request);
+
+    void logout(String token);
 }
