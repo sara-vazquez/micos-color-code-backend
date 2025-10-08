@@ -32,6 +32,6 @@ public class RoleEntity {
     private String username;
 
     @ManyToMany(mappedBy="roles")
-    private Set<UserEntity> users;
+    private Set<UserEntity> users
 
 }
