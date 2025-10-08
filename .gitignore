@@ -39,5 +39,6 @@ application.properties
 application-devh2.properties
 application-devmysql.properties
 application.yml
+compose.yaml
 
 .env
