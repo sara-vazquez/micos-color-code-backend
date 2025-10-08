@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import dev.sara.micos_color_code.Captcha.CaptchaService;
 import dev.sara.micos_color_code.register.RegisterRequestDTO;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
@@ -17,8 +18,14 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
+    @Autowired
+    private CaptchaService captchaService;
+
     @PostMapping("/register")
     public ResponseEntity<AuthResponseDTO> register(@RequestBody RegisterRequestDTO request) {
+        if (!captchaService.validate(request.getCaptchaId(), request.getCaptchaAnswer())) {
+            throw new RuntimeException("Captcha inválido");
+        }
         return ResponseEntity.ok(authService.register(request));
     }
 
