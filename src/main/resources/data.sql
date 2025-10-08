@@ -1,12 +1,14 @@
-INSERT INTO roles (id_role, name) VALUES (1, "ROLE_ADMIN");
-INSERT INTO roles (id_role, name) VALUES (2, "ROLE_USER");
+-- ROLES
+INSERT INTO roles (id_role, name) VALUES (1, 'ROLE_ADMIN');
+INSERT INTO roles (id_role, name) VALUES (2, 'ROLE_USER');
 
-/* Test: admin and user */
+-- TEST: USER AND ADMIN 
+INSERT INTO users (id, username, email, password, enabled)
+VALUES (1, 'admin_test', 'admin@test.com', 'admin12345678!', TRUE);
 
-INSERT INTO users (id, username, password, enabled) 
-VALUES (1, 'admin_test', '$2a$10$wT0XhI3H9/jN05s.m6h3Q.eL4g2X0B2/h5i/eD5gJ8/eI6x6H7v7I', TRUE);
+INSERT INTO users (id, username, email, password, enabled)
+VALUES (2, 'user_test', 'user@test.com', 'user12345678!', TRUE);
 
-INSERT INTO users(id, username, password, enabled)
-VALUES(2, 'user_test','$2a$10$wT0XhI3H9/jN05s.m6h3Q.eL4g2X0B2/h5i/eD5gJ8/eI6x6H7v7I', TRUE)
-
-INSERT INTO user_roles (user_id, role_id) VALUES (2, 2); 
+-- REL.
+INSERT INTO user_roles (user_id, role_id) VALUES (1, 1);
+INSERT INTO user_roles (user_id, role_id) VALUES (2, 2);
