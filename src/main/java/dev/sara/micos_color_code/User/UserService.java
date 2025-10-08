@@ -11,27 +11,24 @@ public class UserService {
     
     private final UserRepository userRepository;
     private final CaptchaService captchaService;
+    private final UserMapper userMapper;
 
-    private final UserBuilder userBuilder; 
-
-    public UserResponseDTO register(UserRequestDTO request) {
-        boolean captchaValid = captchaService.validate(request.captchaId(), request.captchaAnswer());
-        if(!captchaValid) {
+    public UserResponseDTO register(UserRequestDTO dto) {
+        if(!captchaService.validate(dto.captchaId(), dto.captchaAnswer())) {
             throw new IllegalArgumentException("Captcha inválido o expirado");
         }
 
-        if(userRepository.findByEmail(request.email()).isPresent()){
+        if(userRepository.findByEmail(dto.email()).isPresent()){
             throw new IllegalArgumentException("El correo ya está registrado");
         }
 
-        if(userRepository.findByUsername(request.username()).isPresent()) {
+        if(userRepository.findByUsername(dto.username()).isPresent()) {
             throw new IllegalArgumentException("El nombre de usuario ya existe");
         }
 
-        UserEntity userToSave = userBuilder.build(request);
+        UserEntity user = userMapper.toEntity(dto);
+        userRepository.save(user);
 
-        UserEntity savedUser = userRepository.save(userToSave);
-        
-        return UserMapper.toResponseDTO(savedUser);
+        return userMapper.toResponse(user);
     }
 }
