@@ -29,7 +29,7 @@ public class RoleEntity {
     private Long id_role;
 
     @Column (unique = true)
-    private String username;
+    private String name;
 
     @ManyToMany(mappedBy="roles")
     private Set<UserEntity> users;
