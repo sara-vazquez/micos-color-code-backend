@@ -13,8 +13,8 @@ import dev.sara.micos_color_code.Role.RoleEntity;
 import dev.sara.micos_color_code.Role.RoleRepository;
 import dev.sara.micos_color_code.User.UserEntity;
 import dev.sara.micos_color_code.User.UserRepository;
-import dev.sara.micos_color_code.jwt.JwtService;
 import dev.sara.micos_color_code.register.RegisterRequestDTO;
+import dev.sara.micos_color_code.security.JwtService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 

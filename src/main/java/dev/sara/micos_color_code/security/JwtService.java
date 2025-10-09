@@ -1,4 +1,4 @@
-package dev.sara.micos_color_code.jwt;
+package dev.sara.micos_color_code.security;
 
 import java.time.Instant;
 import java.util.stream.Collectors;
