@@ -43,13 +43,15 @@ public class CaptchaService {
         Operation op = generators.get(rand(0, generators.size() - 1)).get();
 
         String id = UUID.randomUUID().toString();
-        Instant expiresAt = Instant.now().plusSeconds(60);
+        Instant expiresAt = Instant.now().plusSeconds(300);
 
         store.put(id, new CaptchaRecord(op.answer(), expiresAt));
+        System.out.println("Captcha generado: " + id + " -> " + op.answer());
         return new CaptchaChallenge(id, op.question());
     }
 
     public boolean validate(String id, int answer) {
+        System.out.println("Store actual: " + store);
         CaptchaRecord record = store.remove(id);
         if (record == null) return false;
         return Instant.now().isBefore(record.expiresAt()) && record.answer() == answer;
