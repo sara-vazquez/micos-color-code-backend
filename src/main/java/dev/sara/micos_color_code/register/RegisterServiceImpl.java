@@ -38,6 +38,7 @@ public class RegisterServiceImpl implements RegisterService {
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
 
+        //First registered user will be the admin
         Set<RoleEntity> roles = new HashSet<>();
         if (userRepository.count() == 0) {
             RoleEntity adminRole = roleRepository.findByName("ROLE_ADMIN")
