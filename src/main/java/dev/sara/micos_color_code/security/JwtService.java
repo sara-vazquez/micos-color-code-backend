@@ -27,18 +27,16 @@ public class JwtService {
     private final NimbusJwtEncoder jwtEncoder;
     private final JwtDecoder jwtDecoder;
 
-    @Value("${jwt.key}")
-    private String jwtSecretKey; 
-
     public JwtService(@Value("${jwt.key}") String secretKeyBase64, JwtDecoder jwtDecoder) {
-        System.out.println("JWT_KEY recibida: " + secretKeyBase64);
     
         if (secretKeyBase64 == null || secretKeyBase64.isEmpty()) {
             throw new IllegalArgumentException("jwt.key no está configurada");
         }
 
+        //Decode key
         byte[] keyBytes = java.util.Base64.getDecoder().decode(secretKeyBase64);
         
+        // Builds JWK for HS512
         JWK jwk = new OctetSequenceKey.Builder(keyBytes)
         .algorithm(JWSAlgorithm.HS512)
         .build();
@@ -51,16 +49,16 @@ public class JwtService {
     public String generateToken(UserEntity user) {
         Instant now = Instant.now();
         JwtClaimsSet claims = JwtClaimsSet.builder()
-            .issuer("micos_color_code")
-            .issuedAt(now)
-            .expiresAt(now.plusSeconds(3600)) // one hour
-            .subject(user.getEmail())
-            .claim("roles", user.getRoles().stream()
-            .map(r -> r.getName())
-            .collect(Collectors.toList()))
-            .build();
+                .issuer("micos_color_code")
+                .issuedAt(now)
+                .expiresAt(now.plusSeconds(3600)) // 1 hora
+                .subject(user.getEmail())
+                .claim("roles", user.getRoles().stream()
+                        .map(r -> r.getName())
+                        .collect(Collectors.toList()))
+                .build();
 
-        return jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();    
+        return jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
     }
 
     public String extractUsername(String token) {

@@ -51,7 +51,7 @@ public class AuthServiceImpl implements AuthService {
             .findFirst()
             .orElse("ROLE_USER");
 
-        return new AuthResponseDTO(token, user.getUsername(), role);
+        return new AuthResponseDTO(user.getUsername(), role);
     }
 
     @Override
@@ -98,8 +98,9 @@ public class AuthServiceImpl implements AuthService {
         // Save on db
         UserEntity savedUser = userRepository.save(user);
 
-        // Generate JWT
-        String token = jwtService.generateToken(savedUser);
+        /*Generate JWT
+        *String token = jwtService.generateToken(savedUser);
+        */
 
         // Get role name
         String roleName = roles.stream()
@@ -107,6 +108,6 @@ public class AuthServiceImpl implements AuthService {
             .findFirst()
             .orElse("ROLE_USER");
 
-        return new AuthResponseDTO(token, savedUser.getUsername(), roleName);
+        return new AuthResponseDTO(savedUser.getUsername(), roleName);
     }
 }
