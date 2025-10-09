@@ -51,7 +51,7 @@ public class SecurityConfig {
     @Order(1)
     public SecurityFilterChain publicEndpoints(HttpSecurity http) throws Exception {
         http
-            .securityMatcher("/auth/**", "/feedback", "/captcha/**") 
+            .securityMatcher("/auth/**", "/register", "/captcha/**") 
             .csrf(csrf -> csrf.disable())
             .cors(cors -> cors.configurationSource(corsConfigurationSource))
             .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
