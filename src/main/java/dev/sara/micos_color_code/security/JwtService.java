@@ -45,7 +45,7 @@ public class JwtService {
     public String generateToken(UserEntity user) {
         Instant now = Instant.now();
         JwtClaimsSet claims = JwtClaimsSet.builder()
-            .issuer("micoscolorcode")
+            .issuer("micos_color_code")
             .issuedAt(now)
             .expiresAt(now.plusSeconds(3600)) // one hour
             .subject(user.getEmail())

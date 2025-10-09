@@ -51,15 +51,15 @@ public class SecurityConfig {
             .cors(cors -> cors.configurationSource(corsConfigurationSource))
             
             .authorizeHttpRequests(authorize -> authorize
-            .requestMatchers(HttpMethod.POST, "/api/auth/login", "/api/auth/register", "/feedback").permitAll()
+            .requestMatchers(HttpMethod.POST, "/auth/login", "/auth/register").permitAll()
             .requestMatchers(HttpMethod.POST, "/feedback").permitAll()
             .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
             // Admin endpoints
-            .requestMatchers("/api/admin/**").hasRole("ADMIN")
+            .requestMatchers("/admin/**").hasRole("ADMIN")
 
             // User endpoints - also admin can use
-            .requestMatchers("/api/user/**").hasAnyRole("USER", "ADMIN")
+            .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
                 
             // Any other request should be authenticated
             .anyRequest().authenticated()
