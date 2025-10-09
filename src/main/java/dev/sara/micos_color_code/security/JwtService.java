@@ -31,6 +31,12 @@ public class JwtService {
     private String jwtSecretKey; 
 
     public JwtService(@Value("${jwt.key}") String secretKeyBase64, JwtDecoder jwtDecoder) {
+        System.out.println("JWT_KEY recibida: " + secretKeyBase64);
+    
+        if (secretKeyBase64 == null || secretKeyBase64.isEmpty()) {
+            throw new IllegalArgumentException("jwt.key no está configurada");
+        }
+
         byte[] keyBytes = java.util.Base64.getDecoder().decode(secretKeyBase64);
         
         JWK jwk = new OctetSequenceKey.Builder(keyBytes)
