@@ -23,25 +23,28 @@ public class AuthServiceImpl implements AuthService {
     public AuthResponseDTO login(AuthRequestDTO request) {
         System.out.println("🔍 Intentando login con email: " + request.getEmail());
 
-        try {// Authenticate user
-        Authentication authentication = authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(request.getEmail(),request.getPassword()));
+        // Authenticate user
+        Authentication authentication;
+        try {
+            authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                    request.getEmail(),
+                    request.getPassword()
+                )
+            );
             System.out.println("✅ Autenticación exitosa");
-
         } catch (Exception e) {
-            System.out.println("❌ Error en autenticación: " + e.getMessage());
-            throw e;
+            System.err.println("❌ Error en autenticación: " + e.getMessage());
+            throw new RuntimeException("Credenciales incorrectas");
         }
 
-        // look for user in db
+        // Find user in db if exists
         UserEntity user = userRepository.findByEmail(request.getEmail())
             .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-            System.out.println("✅ Usuario encontrado: " + user.getUsername());
-            System.out.println("🔑 Password hasheada en BD: " + user.getPassword());
-            System.out.println("🔑 Password recibida: " + request.getPassword());
+        System.out.println("✅ Usuario encontrado: " + user.getUsername());
 
-        // generate jwt
+        //Generate token with JwtService
         String token = jwtService.generateToken(user);
 
         String role = user.getRoles().stream()
@@ -49,9 +52,11 @@ public class AuthServiceImpl implements AuthService {
             .findFirst()
             .orElse("ROLE_USER");
 
+        System.out.println("✅ Token generado correctamente");
+
         return new AuthResponseDTO(token, user.getUsername(), role);
     }
 
     @Override
-    public void logout(String token){}
+    public void logout(String token) {}
 }
