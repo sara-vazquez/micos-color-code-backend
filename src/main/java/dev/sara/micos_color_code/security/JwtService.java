@@ -29,24 +29,30 @@ public class JwtService {
 
     public JwtService(@Value("${jwt.key}") String secretKeyBase64, JwtDecoder jwtDecoder) {
         System.out.println("🔑 JWT_KEY recibida: [" + secretKeyBase64 + "]");
-        System.out.println("🔑 JWT_KEY es null?: " + (secretKeyBase64 == null));
-        System.out.println("🔑 JWT_KEY está vacía?: " + (secretKeyBase64 != null && secretKeyBase64.isEmpty()));
-    
-        if (secretKeyBase64 == null || secretKeyBase64.isEmpty()|| secretKeyBase64.equals("${jwt.key}")) {
-            throw new IllegalArgumentException("jwt.key no está configurada");
+        
+        try {
+            byte[] keyBytes = java.util.Base64.getDecoder().decode(secretKeyBase64);
+            System.out.println("✅ Clave decodificada, tamaño: " + keyBytes.length + " bytes");
+            
+            // IMPORTANTE: Usar keyID para que Spring Security pueda seleccionar la clave
+            JWK jwk = new OctetSequenceKey.Builder(keyBytes)
+                .algorithm(JWSAlgorithm.HS512)
+                .keyID("micos-key") // ← AÑADE ESTO
+                .build();
+            
+            System.out.println("✅ JWK creado: " + jwk.getAlgorithm());
+            
+            JWKSource<SecurityContext> jwkSource = new ImmutableJWKSet<>(new JWKSet(jwk));
+            this.jwtEncoder = new NimbusJwtEncoder(jwkSource);
+            this.jwtDecoder = jwtDecoder;
+            
+            System.out.println("✅ NimbusJwtEncoder inicializado correctamente");
+            
+        } catch (Exception e) {
+            System.err.println("❌ Error inicializando JWT: " + e.getMessage());
+            e.printStackTrace();
+            throw new RuntimeException("Error inicializando JWT", e);
         }
-
-        //Decode key
-        byte[] keyBytes = java.util.Base64.getDecoder().decode(secretKeyBase64);
-        
-        // Builds JWK for HS512
-        JWK jwk = new OctetSequenceKey.Builder(keyBytes)
-        .algorithm(JWSAlgorithm.HS512)
-        .build();
-        
-        JWKSource<SecurityContext> jwkSource = new ImmutableJWKSet<>(new JWKSet(jwk));
-        this.jwtEncoder = new NimbusJwtEncoder(jwkSource);
-        this.jwtDecoder = jwtDecoder;
     }
 
     public String generateToken(UserEntity user) {
