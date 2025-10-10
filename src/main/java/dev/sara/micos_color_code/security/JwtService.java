@@ -28,8 +28,11 @@ public class JwtService {
     private final JwtDecoder jwtDecoder;
 
     public JwtService(@Value("${jwt.key}") String secretKeyBase64, JwtDecoder jwtDecoder) {
+        System.out.println("🔑 JWT_KEY recibida: [" + secretKeyBase64 + "]");
+        System.out.println("🔑 JWT_KEY es null?: " + (secretKeyBase64 == null));
+        System.out.println("🔑 JWT_KEY está vacía?: " + (secretKeyBase64 != null && secretKeyBase64.isEmpty()));
     
-        if (secretKeyBase64 == null || secretKeyBase64.isEmpty()) {
+        if (secretKeyBase64 == null || secretKeyBase64.isEmpty()|| secretKeyBase64.equals("${jwt.key}")) {
             throw new IllegalArgumentException("jwt.key no está configurada");
         }
 
