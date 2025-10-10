@@ -25,10 +25,8 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<String> logout(@RequestHeader("Authorization") String token) {
-        String jwt = token.replace("Bearer ", "");
-        authService.logout(jwt);
-        return ResponseEntity.ok("Logout exitoso");
+    public ResponseEntity<String> logout(@RequestHeader("Authorization") String authHeader) {
+        return ResponseEntity.ok("Logout successful");
     }
 
 }
