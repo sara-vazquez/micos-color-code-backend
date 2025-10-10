@@ -3,21 +3,19 @@ package dev.sara.micos_color_code.security;
 import java.time.Instant;
 import java.util.stream.Collectors;
 
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.stereotype.Service;
 
-import com.nimbusds.jose.JWSAlgorithm;
-import com.nimbusds.jose.jwk.JWK;
-import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.OctetSequenceKey;
-import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
-import com.nimbusds.jose.jwk.source.JWKSource;
-import com.nimbusds.jose.proc.SecurityContext;
 
 import dev.sara.micos_color_code.User.UserEntity;
 
@@ -34,15 +32,18 @@ public class JwtService {
             byte[] keyBytes = java.util.Base64.getDecoder().decode(secretKeyBase64);
             System.out.println("✅ Clave decodificada, tamaño: " + keyBytes.length + " bytes");
             
-            // IMPORTANTE: Usar keyID para que Spring Security pueda seleccionar la clave
-            JWK jwk = new OctetSequenceKey.Builder(keyBytes)
-                .algorithm(JWSAlgorithm.HS512)
-                .keyID("micos-key") // ← AÑADE ESTO
-                .build();
+            // Crear SecretKey
+            SecretKey secretKey = new SecretKeySpec(keyBytes, "HmacSHA512");
             
-            System.out.println("✅ JWK creado: " + jwk.getAlgorithm());
+            // Crear OctetSequenceKey desde SecretKey
+            OctetSequenceKey jwk = new OctetSequenceKey.Builder(keyBytes)
+                    .algorithm(com.nimbusds.jose.JWSAlgorithm.HS512)
+                    .build();
             
-            JWKSource<SecurityContext> jwkSource = new ImmutableJWKSet<>(new JWKSet(jwk));
+            // Crear JWKSource
+            com.nimbusds.jose.jwk.source.ImmutableJWKSet<com.nimbusds.jose.proc.SecurityContext> jwkSource = 
+                    new com.nimbusds.jose.jwk.source.ImmutableJWKSet<>(new com.nimbusds.jose.jwk.JWKSet(jwk));
+            
             this.jwtEncoder = new NimbusJwtEncoder(jwkSource);
             this.jwtDecoder = jwtDecoder;
             
@@ -60,7 +61,7 @@ public class JwtService {
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("micos_color_code")
                 .issuedAt(now)
-                .expiresAt(now.plusSeconds(3600)) // 1 hora
+                .expiresAt(now.plusSeconds(3600))
                 .subject(user.getEmail())
                 .claim("roles", user.getRoles().stream()
                         .map(r -> r.getName())
