@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
     Optional <UserEntity> findByEmail(String email);
     Optional <UserEntity> findByUsername(String username);
-    Optional<UserEntity> findByConfirmationToken(String token);
+    Optional<UserEntity> findByConfirmationToken(String confirmationToken);
 }
