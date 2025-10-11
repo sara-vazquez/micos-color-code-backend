@@ -41,9 +41,9 @@ public class RegisterController {
     public String confirmAccount(@RequestParam("token") String token) {
         try {
             registerService.confirmAccount(token);
-            return "redirect:http://localhost:5173/confirmation-success";
+            return "redirect:http://localhost:5173/login?confirmed=true";
         } catch (RuntimeException e) {
-            return "redirect:http://localhost:5173/confirmation-error?message=" + e.getMessage();
+            return "redirect:http://localhost:5173/login?error=" + e.getMessage();
         }
     }
 }
