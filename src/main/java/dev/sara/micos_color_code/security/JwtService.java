@@ -43,7 +43,7 @@ public class JwtService {
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("micos_color_code")
                 .issuedAt(now)
-                .expiresAt(now.plusSeconds(3600))
+                .expiresAt(now.plusSeconds(86400))
                 .subject(user.getEmail())
                 .claim("roles", user.getRoles().stream()
                         .map(r -> r.getName())
