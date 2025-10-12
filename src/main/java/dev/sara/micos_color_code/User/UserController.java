@@ -1,8 +1,8 @@
 package dev.sara.micos_color_code.User;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,24 +21,30 @@ public class UserController {
     private final UserMapper userMapper;
 
     @GetMapping("/profile")
-    public ResponseEntity<UserResponseDTO> getProfile(@AuthenticationPrincipal UserDetails userDetails) {
-        if (userDetails == null) {
+    public ResponseEntity<UserResponseDTO> getProfile(Authentication authentication) {
+        if (authentication == null || !authentication.isAuthenticated()) {
             return ResponseEntity.status(401).build();
         }
 
-        return userRepository.findByEmail(userDetails.getUsername())
+         Jwt jwt = (Jwt) authentication.getPrincipal();
+         String email = jwt.getSubject();  
+
+        return userRepository.findByEmail(email)
                 .map(userMapper::toResponse)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PutMapping("/profile")
-    public ResponseEntity<UserResponseDTO> updateProfile(
-            @AuthenticationPrincipal UserDetails userDetails,
-            @RequestBody UserUpdateDTO updateDTO
-    ) {
-        UserResponseDTO updatedUser = userService.updateProfile(userDetails, updateDTO);
+    public ResponseEntity<UserResponseDTO> updateProfile(Authentication authentication, @RequestBody UserUpdateDTO updateDTO) {
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return ResponseEntity.status(401).build();
+        }
+
+        Jwt jwt = (Jwt) authentication.getPrincipal();
+        String email = jwt.getSubject();
+
+        UserResponseDTO updatedUser = userService.updateProfile(email, updateDTO);
         return ResponseEntity.ok(updatedUser);
     }
-
 }

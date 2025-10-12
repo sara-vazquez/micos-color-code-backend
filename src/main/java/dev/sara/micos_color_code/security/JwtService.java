@@ -3,13 +3,19 @@ package dev.sara.micos_color_code.security;
 import java.time.Instant;
 import java.util.Base64;
 import java.util.stream.Collectors;
+
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
-import org.springframework.security.oauth2.jwt.*;
+import org.springframework.security.oauth2.jwt.JwsHeader;
+import org.springframework.security.oauth2.jwt.JwtClaimsSet;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.JwtEncoder;
+import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
+import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.stereotype.Service;
 
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
@@ -29,8 +35,6 @@ public class JwtService {
         SecretKey secretKey = new SecretKeySpec(keyBytes, "HmacSHA512");
 
         this.jwtEncoder = new NimbusJwtEncoder(new ImmutableSecret<>(secretKey));
-
-        System.out.println("✅ JwtService inicializado correctamente (usa el decoder de SecurityConfig)");
     }
 
     public String generateToken(UserEntity user) {
