@@ -1,8 +1,8 @@
-package dev.sara.micos_color_code.Role;
+package dev.sara.micos_color_code.role;
 
 import java.util.Set;
 
-import dev.sara.micos_color_code.User.UserEntity;
+import dev.sara.micos_color_code.user.UserEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

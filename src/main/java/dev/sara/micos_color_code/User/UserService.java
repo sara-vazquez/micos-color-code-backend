@@ -1,9 +1,9 @@
-package dev.sara.micos_color_code.User;
+package dev.sara.micos_color_code.user;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import dev.sara.micos_color_code.Captcha.CaptchaService;
+import dev.sara.micos_color_code.captcha.CaptchaService;
 import lombok.RequiredArgsConstructor;
 
 @Service

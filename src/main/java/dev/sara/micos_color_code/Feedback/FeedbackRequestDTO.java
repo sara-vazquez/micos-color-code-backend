@@ -1,4 +1,4 @@
-package dev.sara.micos_color_code.Feedback;
+package dev.sara.micos_color_code.feedback;
 
 public class FeedbackRequestDTO {
     private String email;

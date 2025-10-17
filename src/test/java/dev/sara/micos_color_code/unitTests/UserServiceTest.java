@@ -5,38 +5,33 @@ import java.util.Optional;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import org.mockito.MockitoAnnotations;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
-import dev.sara.micos_color_code.Captcha.CaptchaService;
-import dev.sara.micos_color_code.User.UserEntity;
-import dev.sara.micos_color_code.User.UserMapper;
-import dev.sara.micos_color_code.User.UserRepository;
-import dev.sara.micos_color_code.User.UserRequestDTO;
-import dev.sara.micos_color_code.User.UserResponseDTO;
-import dev.sara.micos_color_code.User.UserService;
+import dev.sara.micos_color_code.captcha.CaptchaService;
+import dev.sara.micos_color_code.user.UserEntity;
+import dev.sara.micos_color_code.user.UserMapper;
+import dev.sara.micos_color_code.user.UserRepository;
+import dev.sara.micos_color_code.user.UserRequestDTO;
+import dev.sara.micos_color_code.user.UserResponseDTO;
+import dev.sara.micos_color_code.user.UserService;
 
+@ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
 
-    @MockitoBean
-    private UserRepository userRepository;
-    
-    @MockitoBean
-    private CaptchaService captchaService;
-
-    @MockitoBean
-    private UserMapper userMapper;
-    
     @InjectMocks
     private UserService userService;
 
@@ -44,9 +39,17 @@ public class UserServiceTest {
     private UserEntity userEntity;
     private UserResponseDTO responseDTO;
 
+    @Mock
+    private UserRepository userRepository;
+    
+    @Mock
+    private CaptchaService captchaService;
+
+    @Mock
+    private UserMapper userMapper;
+
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
 
         requestDTO = new UserRequestDTO("maurihidalgo", "mauriciohidalgo@gmail.com", "password123", "6438992074jkilwn234", 24);
 

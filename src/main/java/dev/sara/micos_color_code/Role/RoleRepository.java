@@ -1,4 +1,4 @@
-package dev.sara.micos_color_code.Role;
+package dev.sara.micos_color_code.role;
 
 import java.util.Optional;
 

@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
 
-import dev.sara.micos_color_code.Captcha.CaptchaService;
-import dev.sara.micos_color_code.User.UserEntity;
-import dev.sara.micos_color_code.User.UserRepository;
+import dev.sara.micos_color_code.captcha.CaptchaService;
+import dev.sara.micos_color_code.user.UserEntity;
+import dev.sara.micos_color_code.user.UserRepository;
 import dev.sara.micos_color_code.util.EmailService;
 
 @RestController

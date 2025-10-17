@@ -7,8 +7,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import dev.sara.micos_color_code.User.UserEntity;
-import dev.sara.micos_color_code.User.UserRepository;
+import dev.sara.micos_color_code.user.UserEntity;
+import dev.sara.micos_color_code.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service

@@ -1,10 +1,10 @@
-package dev.sara.micos_color_code.User;
+package dev.sara.micos_color_code.user;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-import dev.sara.micos_color_code.Role.RoleEntity;
+import dev.sara.micos_color_code.role.RoleEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

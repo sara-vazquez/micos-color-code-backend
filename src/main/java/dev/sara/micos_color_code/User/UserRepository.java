@@ -1,4 +1,4 @@
-package dev.sara.micos_color_code.User;
+package dev.sara.micos_color_code.user;
 
 import java.util.Optional;
 

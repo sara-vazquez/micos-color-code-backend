@@ -1,4 +1,4 @@
-package dev.sara.micos_color_code.Captcha;
+package dev.sara.micos_color_code.captcha;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

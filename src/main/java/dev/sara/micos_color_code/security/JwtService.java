@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
 
-import dev.sara.micos_color_code.User.UserEntity;
+import dev.sara.micos_color_code.user.UserEntity;
 
 @Service
 public class JwtService {

@@ -7,10 +7,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import dev.sara.micos_color_code.Role.RoleEntity;
-import dev.sara.micos_color_code.User.UserEntity;
-import dev.sara.micos_color_code.User.UserRepository;
+import dev.sara.micos_color_code.role.RoleEntity;
 import dev.sara.micos_color_code.security.JwtService;
+import dev.sara.micos_color_code.user.UserEntity;
+import dev.sara.micos_color_code.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

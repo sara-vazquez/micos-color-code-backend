@@ -1,4 +1,4 @@
-package dev.sara.micos_color_code.Feedback;
+package dev.sara.micos_color_code.feedback;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

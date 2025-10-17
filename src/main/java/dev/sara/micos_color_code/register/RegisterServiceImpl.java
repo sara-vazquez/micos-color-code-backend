@@ -8,10 +8,10 @@ import java.util.UUID;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import dev.sara.micos_color_code.Role.RoleEntity;
-import dev.sara.micos_color_code.Role.RoleRepository;
-import dev.sara.micos_color_code.User.UserEntity;
-import dev.sara.micos_color_code.User.UserRepository;
+import dev.sara.micos_color_code.role.RoleEntity;
+import dev.sara.micos_color_code.role.RoleRepository;
+import dev.sara.micos_color_code.user.UserEntity;
+import dev.sara.micos_color_code.user.UserRepository;
 import dev.sara.micos_color_code.util.EmailService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package dev.sara.micos_color_code.User;
+package dev.sara.micos_color_code.user;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;

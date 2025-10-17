@@ -1,4 +1,4 @@
-package dev.sara.micos_color_code.Captcha;
+package dev.sara.micos_color_code.captcha;
 
 import java.time.Instant;
 import java.util.HashMap;
