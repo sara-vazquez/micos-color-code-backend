@@ -26,7 +26,7 @@ public class ResourceEntity {
     private Long id;
 
     @Column(name="image", nullable=false)
-    private String image;
+    private String imageFile;
 
     @Column(name="name", nullable=false)
     private String name;
@@ -38,6 +38,6 @@ public class ResourceEntity {
     private String description;
 
     @Column(name="pdf", nullable=false, unique = true)
-    private String pdf;
+    private String pdfFile;
     
 }

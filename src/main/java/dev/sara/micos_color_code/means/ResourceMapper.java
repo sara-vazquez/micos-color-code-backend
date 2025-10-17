@@ -9,16 +9,16 @@ import org.springframework.stereotype.Component;
 public class ResourceMapper {
     public ResourceEntity toEntity(ResourceRequestDTO dto) {
         return ResourceEntity.builder()
-        .image(dto.image())
+        .imageFile(dto.imageFile())
         .name(dto.name())
         .intro(dto.intro())
         .description(dto.description())
-        .pdf(dto.pdf())
+        .pdfFile(dto.pdfFile())
         .build();
     }
 
     public ResourceDetailsResponseDTO toDetailsResponseDTO(ResourceEntity entity) {
-        return new ResourceDetailsResponseDTO(entity.getId(), entity.getImage(), entity.getName(), entity.getDescription(), entity.getPdf());
+        return new ResourceDetailsResponseDTO(entity.getId(), entity.getImageFile(), entity.getName(), entity.getDescription(), entity.getPdfFile());
     }
 
     public ResourceItemResponseDTO toItemResponseDTO(ResourceEntity entity) {

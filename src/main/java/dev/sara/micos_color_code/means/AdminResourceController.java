@@ -3,17 +3,18 @@ package dev.sara.micos_color_code.means;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -29,28 +30,51 @@ public class AdminResourceController {
         return ResponseEntity.ok(resources);
     }
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ResourceDetailsResponseDTO> createResource(
-        @RequestBody @Valid ResourceRequestDTO requestDTO) {
-        
-        ResourceDetailsResponseDTO createdResource = adminResourceService.create(requestDTO);
-        return new ResponseEntity<>(createdResource, HttpStatus.CREATED); 
-    }
+    @RequestParam("name") String name,
+    @RequestParam("intro") String intro,
+    @RequestParam("description") String description,
+    @RequestParam("image") MultipartFile imageFile,
+    @RequestParam("pdf") MultipartFile pdfFile) {
+    
+    ResourceRequestDTO requestDTO = new ResourceRequestDTO(
+        null, // path generated in service
+        name,
+        intro,
+        description,
+        null  // path generated in service
+    );
+    
+    ResourceDetailsResponseDTO createdResource = adminResourceService.create(requestDTO, imageFile, pdfFile);
+    return new ResponseEntity<>(createdResource, HttpStatus.CREATED); 
+}
 
-    @PutMapping("/{id}")
-    public ResponseEntity<ResourceDetailsResponseDTO> updateResource(
-        @PathVariable Long id,
-        @RequestBody @Valid ResourceRequestDTO requestDTO) {
+@PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+public ResponseEntity<ResourceDetailsResponseDTO> updateResource(
+    @PathVariable Long id,
+    @RequestParam("name") String name,
+    @RequestParam("intro") String intro,
+    @RequestParam("description") String description,
+    @RequestParam(value = "image", required = false) MultipartFile imageFile,
+    @RequestParam(value = "pdf", required = false) MultipartFile pdfFile) {
 
-        ResourceDetailsResponseDTO updatedResource = adminResourceService.update(id, requestDTO);
-        return ResponseEntity.ok(updatedResource);
-    }
+    ResourceRequestDTO requestDTO = new ResourceRequestDTO(
+        null,
+        name,
+        intro,
+        description,
+        null 
+    );
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteResource(@PathVariable Long id) {
-        adminResourceService.delete(id);
-        
-        return ResponseEntity.noContent().build();
-    }
+    ResourceDetailsResponseDTO updatedResource = adminResourceService.update(id, requestDTO, imageFile, pdfFile);
+    return ResponseEntity.ok(updatedResource);
+}
+
+@DeleteMapping("/{id}")
+public ResponseEntity<Void> deleteResource(@PathVariable Long id) {
+    adminResourceService.delete(id);
+    return ResponseEntity.noContent().build();
+}
     
 }
