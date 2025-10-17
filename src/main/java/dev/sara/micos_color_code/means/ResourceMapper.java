@@ -12,7 +12,7 @@ public class ResourceMapper {
         .image(dto.image())
         .name(dto.name())
         .intro(dto.intro())
-        .description(dto.descrption())
+        .description(dto.description())
         .pdf(dto.pdf())
         .build();
     }
