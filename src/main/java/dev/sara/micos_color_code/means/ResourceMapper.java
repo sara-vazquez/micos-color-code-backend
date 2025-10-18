@@ -22,7 +22,7 @@ public class ResourceMapper {
     }
 
     public ResourceItemResponseDTO toItemResponseDTO(ResourceEntity entity) {
-        return new ResourceItemResponseDTO(entity.getId(), entity.getName(), entity.getIntro());
+        return new ResourceItemResponseDTO(entity.getId(), entity.getImageFile(), entity.getName(), entity.getIntro(), entity.getDescription(), entity.getPdfFile());
     }
 
     public List<ResourceItemResponseDTO> toListItemDTOs(List<ResourceEntity> entities) {
