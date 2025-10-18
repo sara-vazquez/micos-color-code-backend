@@ -55,41 +55,39 @@ public class AdminResourceService {
         }
     }
 
-    public ResourceDetailsResponseDTO update(Long id, ResourceRequestDTO requestDTO, MultipartFile imageFile, MultipartFile pdfFile) {
-        try {
-            ResourceEntity existingEntity = resourceRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Recurso no encontrado con ID: " + id));
+    public ResourceDetailsResponseDTO update(Long id, ResourceRequestDTO requestDTO, 
+                                        MultipartFile imageFile, MultipartFile pdfFile) {
+    try {
+        ResourceEntity existingEntity = resourceRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Recurso no encontrado con ID: " + id));
 
-            existingEntity.setName(requestDTO.name());
-            existingEntity.setIntro(requestDTO.intro());
-            existingEntity.setDescription(requestDTO.description());
-            
-            if (imageFile != null && !imageFile.isEmpty()) {
-                deleteFile(existingEntity.getImageFile());
-                String newImagePath = saveFile(imageFile, "images");
-                existingEntity.setImageFile(newImagePath);
-            } else if (requestDTO.imageFile() != null && !requestDTO.imageFile().isBlank()) {
-                existingEntity.setImageFile(requestDTO.imageFile());
-            }
-            
-            if (pdfFile != null && !pdfFile.isEmpty()) {
-                deleteFile(existingEntity.getPdfFile());
-                String newPdfPath = saveFile(pdfFile, "pdfs");
-                existingEntity.setPdfFile(newPdfPath);
-            } else if (requestDTO.pdfFile() != null && !requestDTO.pdfFile().isBlank()) {
-                existingEntity.setPdfFile(requestDTO.pdfFile());
-            }
-            
-            
-            ResourceEntity updatedEntity = resourceRepository.save(existingEntity);
-            
-            return resourceMapper.toDetailsResponseDTO(updatedEntity);
-            
-        } catch (IOException e) {
-            throw new RuntimeException("Error al actualizar archivos: " + e.getMessage(), e);
+        existingEntity.setName(requestDTO.name());
+        existingEntity.setIntro(requestDTO.intro());
+        existingEntity.setDescription(requestDTO.description());
+        
+        if (imageFile != null && !imageFile.isEmpty()) {
+            deleteFile(existingEntity.getImageFile());
+            String newImagePath = saveFile(imageFile, "images");
+            existingEntity.setImageFile(newImagePath);
+        } else if (requestDTO.imageFile() != null && !requestDTO.imageFile().isBlank()) {
+            existingEntity.setImageFile(requestDTO.imageFile());
         }
+        
+        if (pdfFile != null && !pdfFile.isEmpty()) {
+            deleteFile(existingEntity.getPdfFile());
+            String newPdfPath = saveFile(pdfFile, "pdfs");
+            existingEntity.setPdfFile(newPdfPath);
+        } else if (requestDTO.pdfFile() != null && !requestDTO.pdfFile().isBlank()) {
+            existingEntity.setPdfFile(requestDTO.pdfFile());
+        }
+        
+        ResourceEntity updatedEntity = resourceRepository.save(existingEntity);
+        return resourceMapper.toDetailsResponseDTO(updatedEntity);
+        
+    } catch (IOException e) {
+        throw new RuntimeException("Error al actualizar archivos: " + e.getMessage(), e);
     }
-
+}
     public void delete(Long id) {
         ResourceEntity entity = resourceRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("Recurso a borrar no encontrado con ID: " + id));

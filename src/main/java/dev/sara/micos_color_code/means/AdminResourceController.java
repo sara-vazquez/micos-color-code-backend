@@ -32,50 +32,50 @@ public class AdminResourceController {
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ResourceDetailsResponseDTO> createResource(
-    @RequestParam("name") String name,
-    @RequestParam("intro") String intro,
-    @RequestParam("description") String description,
-    @RequestParam("image") MultipartFile imageFile,
-
-    @RequestParam("pdf") MultipartFile pdfFile) {
+        @RequestParam("name") String name,
+        @RequestParam("intro") String intro,
+        @RequestParam("description") String description,
+        @RequestParam("image") MultipartFile imageFile,
+        @RequestParam("pdf") MultipartFile pdfFile) {
     
-    ResourceRequestDTO requestDTO = new ResourceRequestDTO(
-        null, // path generated in service
-        name,
-        intro,
-        description,
-        null  // path generated in service
-    );
-    
-    ResourceDetailsResponseDTO createdResource = adminResourceService.create(requestDTO, imageFile, pdfFile);
-    return new ResponseEntity<>(createdResource, HttpStatus.CREATED); 
-}
+        ResourceRequestDTO requestDTO = new ResourceRequestDTO(
+            null, 
+            name,
+            intro,
+            description,
+            null  
+        );
+        
+        ResourceDetailsResponseDTO createdResource = adminResourceService.create(requestDTO, imageFile, pdfFile);
+        return new ResponseEntity<>(createdResource, HttpStatus.CREATED); 
+    }
 
-@PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-public ResponseEntity<ResourceDetailsResponseDTO> updateResource(
-    @PathVariable Long id,
-    @RequestParam("name") String name,
-    @RequestParam("intro") String intro,
-    @RequestParam("description") String description,
-    @RequestParam(value = "image", required = false) MultipartFile imageFile,
-    @RequestParam(value = "pdf", required = false) MultipartFile pdfFile) {
+    @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ResourceDetailsResponseDTO> updateResource(
+        @PathVariable Long id,
+        @RequestParam("name") String name,
+        @RequestParam("intro") String intro,
+        @RequestParam("description") String description,
+        @RequestParam(value = "image", required = false) MultipartFile imageFile,
+        @RequestParam(value = "pdf", required = false) MultipartFile pdfFile,
+        @RequestParam(value = "existingImagePath", required = false) String existingImagePath,
+        @RequestParam(value = "existingPdfPath", required = false) String existingPdfPath) {
 
-    ResourceRequestDTO requestDTO = new ResourceRequestDTO(
-        null,
-        name,
-        intro,
-        description,
-        null 
-    );
+        ResourceRequestDTO requestDTO = new ResourceRequestDTO(
+            existingImagePath, 
+            name,
+            intro,
+            description,
+            existingPdfPath    
+        );
 
-    ResourceDetailsResponseDTO updatedResource = adminResourceService.update(id, requestDTO, imageFile, pdfFile);
-    return ResponseEntity.ok(updatedResource);
-}
+        ResourceDetailsResponseDTO updatedResource = adminResourceService.update(id, requestDTO, imageFile, pdfFile);
+        return ResponseEntity.ok(updatedResource);
+    }
 
-@DeleteMapping("/{id}")
-public ResponseEntity<Void> deleteResource(@PathVariable Long id) {
-    adminResourceService.delete(id);
-    return ResponseEntity.noContent().build();
-}
-    
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteResource(@PathVariable Long id) {
+        adminResourceService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }
