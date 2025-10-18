@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -23,6 +24,14 @@ public class AdminResourceService {
 
     @Value("${upload.path}")
     private String uploadPath;
+
+    @PostConstruct
+    public void init() {
+        System.out.println("========================================");
+        System.out.println("📁 Upload path configurado: " + uploadPath);
+        System.out.println("📂 Ruta absoluta: " + Paths.get(uploadPath).toAbsolutePath());
+        System.out.println("========================================");
+    }
     
     public ResourceDetailsResponseDTO create(ResourceRequestDTO requestDTO, MultipartFile imageFile, MultipartFile pdfFile) {
         try {
