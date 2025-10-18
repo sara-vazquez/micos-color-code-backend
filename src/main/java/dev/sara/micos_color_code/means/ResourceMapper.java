@@ -9,20 +9,20 @@ import org.springframework.stereotype.Component;
 public class ResourceMapper {
     public ResourceEntity toEntity(ResourceRequestDTO dto) {
         return ResourceEntity.builder()
-        .imageFile(dto.imageFile())
         .name(dto.name())
         .intro(dto.intro())
         .description(dto.description())
+        .imageFile(dto.imageFile())
         .pdfFile(dto.pdfFile())
         .build();
     }
 
     public ResourceDetailsResponseDTO toDetailsResponseDTO(ResourceEntity entity) {
-        return new ResourceDetailsResponseDTO(entity.getId(), entity.getImageFile(), entity.getName(), entity.getDescription(), entity.getPdfFile());
+        return new ResourceDetailsResponseDTO(entity.getId(), entity.getName(), entity.getDescription(),  entity.getImageFile(), entity.getPdfFile());
     }
 
     public ResourceItemResponseDTO toItemResponseDTO(ResourceEntity entity) {
-        return new ResourceItemResponseDTO(entity.getId(), entity.getImageFile(), entity.getName(), entity.getIntro(), entity.getDescription(), entity.getPdfFile());
+        return new ResourceItemResponseDTO(entity.getId(), entity.getName(), entity.getIntro(), entity.getDescription(), entity.getImageFile(), entity.getPdfFile());
     }
 
     public List<ResourceItemResponseDTO> toListItemDTOs(List<ResourceEntity> entities) {

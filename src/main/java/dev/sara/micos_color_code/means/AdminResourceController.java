@@ -36,6 +36,7 @@ public class AdminResourceController {
     @RequestParam("intro") String intro,
     @RequestParam("description") String description,
     @RequestParam("image") MultipartFile imageFile,
+
     @RequestParam("pdf") MultipartFile pdfFile) {
     
     ResourceRequestDTO requestDTO = new ResourceRequestDTO(
