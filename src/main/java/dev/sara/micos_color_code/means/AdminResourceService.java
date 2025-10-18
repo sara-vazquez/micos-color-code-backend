@@ -105,6 +105,9 @@ public class AdminResourceService {
     // handleFiles 
     
     private String saveFile(MultipartFile file, String folder) throws IOException {
+        System.out.println("🔍 Guardando archivo en folder: " + folder);
+        System.out.println("🔍 uploadPath: " + uploadPath);
+
         if (folder.equals("images") && !isValidImage(file)) {
             throw new IllegalArgumentException("El archivo debe ser una imagen válida (jpg, jpeg, png, gif)");
         }
@@ -117,13 +120,22 @@ public class AdminResourceService {
         String fileName = System.currentTimeMillis() + "_" + UUID.randomUUID().toString() + extension;
         
         Path uploadDir = Paths.get(uploadPath, folder);
+        System.out.println("📂 Directorio completo: " + uploadDir.toAbsolutePath());
+
         if (!Files.exists(uploadDir)) {
-            Files.createDirectories(uploadDir);
+            System.out.println("⚠️ Directorio no existe, creándolo...");
+            Files.createDirectories(uploadDir);System.out.println("✅ Directorio creado");
+        } else {
+            System.out.println("✅ Directorio ya existe");
         }
         
         // Save file in directory
         Path filePath = uploadDir.resolve(fileName);
+        System.out.println("💾 Guardando archivo en: " + filePath.toAbsolutePath());
+
         Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+        System.out.println("✅ Archivo guardado correctamente");
+
         
         return "/uploads/" + folder + "/" + fileName;
     }
