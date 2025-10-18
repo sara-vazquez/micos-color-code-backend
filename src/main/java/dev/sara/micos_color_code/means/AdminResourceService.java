@@ -66,17 +66,20 @@ public class AdminResourceService {
             
             if (imageFile != null && !imageFile.isEmpty()) {
                 deleteFile(existingEntity.getImageFile());
-                
                 String newImagePath = saveFile(imageFile, "images");
                 existingEntity.setImageFile(newImagePath);
+            } else if (requestDTO.imageFile() != null && !requestDTO.imageFile().isBlank()) {
+                existingEntity.setImageFile(requestDTO.imageFile());
             }
             
             if (pdfFile != null && !pdfFile.isEmpty()) {
                 deleteFile(existingEntity.getPdfFile());
-                
                 String newPdfPath = saveFile(pdfFile, "pdfs");
                 existingEntity.setPdfFile(newPdfPath);
+            } else if (requestDTO.pdfFile() != null && !requestDTO.pdfFile().isBlank()) {
+                existingEntity.setPdfFile(requestDTO.pdfFile());
             }
+            
             
             ResourceEntity updatedEntity = resourceRepository.save(existingEntity);
             
