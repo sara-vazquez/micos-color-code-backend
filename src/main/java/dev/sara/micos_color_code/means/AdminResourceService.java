@@ -21,7 +21,7 @@ public class AdminResourceService {
     private final ResourceRepository resourceRepository;
     private final ResourceMapper resourceMapper;
 
-    @Value("${upload.path:uploads}")
+    @Value("${upload.path}")
     private String uploadPath;
     
     public ResourceDetailsResponseDTO create(ResourceRequestDTO requestDTO, MultipartFile imageFile, MultipartFile pdfFile) {
