@@ -14,7 +14,7 @@ public class ResourceService {
     private final ResourceMapper resourceMapper;
 
     public List<ResourceItemResponseDTO> findAllPublic() {
-        List<ResourceEntity> entities = resourceRepository.findAll(); //gets all available cards
+        List<ResourceEntity> entities = resourceRepository.findAll(); 
 
         return resourceMapper.toListItemDTOs(entities);
     }
