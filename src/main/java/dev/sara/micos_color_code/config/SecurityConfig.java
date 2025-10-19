@@ -59,7 +59,7 @@ public class SecurityConfig {
         return converter;
     }
 
-    // --- Public endpoints ---
+    // Public endpoints 
     @Bean
     @Order(1)
     public SecurityFilterChain publicEndpoints(HttpSecurity http) throws Exception {
@@ -74,9 +74,24 @@ public class SecurityConfig {
         return http.build();
     }
 
-    // --- API protected with JWT ---
+    // Public access for uploads 
     @Bean
     @Order(2)
+    public SecurityFilterChain uploadsPublicAccess(HttpSecurity http) throws Exception {
+        http
+            .securityMatcher("/uploads/**")
+            .csrf(csrf -> csrf.disable())
+            .cors(cors -> cors.configurationSource(corsConfigurationSource))
+            .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
+            .httpBasic(httpBasic -> httpBasic.disable())
+            .oauth2ResourceServer(oauth2 -> oauth2.disable());
+
+        return http.build();
+    }
+
+    // API protected with JWT
+    @Bean
+    @Order(3)
     public SecurityFilterChain apiSecurity(HttpSecurity http, AuthenticationProvider authenticationProvider) throws Exception {
         http
             .csrf(csrf -> csrf.disable())

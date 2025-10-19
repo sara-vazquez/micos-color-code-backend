@@ -26,6 +26,13 @@ public class AdminResourceService {
     
     public ResourceDetailsResponseDTO create(ResourceRequestDTO requestDTO, MultipartFile imageFile, MultipartFile pdfFile) {
         try {
+            System.out.println("=== CREATE - INICIO ===");
+            System.out.println("DTO recibido - name: [" + requestDTO.name() + "]");
+            System.out.println("DTO recibido - intro: [" + requestDTO.intro() + "]");
+            System.out.println("DTO recibido - description: [" + requestDTO.description() + "]");
+            System.out.println("DTO recibido - imageFile: [" + requestDTO.imageFile() + "]");
+            System.out.println("DTO recibido - pdfFile: [" + requestDTO.pdfFile() + "]");
+            
             if (imageFile == null || imageFile.isEmpty()) {
                 throw new IllegalArgumentException("La imagen es obligatoria");
             }
@@ -33,20 +40,42 @@ public class AdminResourceService {
                 throw new IllegalArgumentException("El PDF es obligatorio");
             }
             
+            System.out.println("✅ Archivos validados");
+            
             String imagePath = saveFile(imageFile, "images");
+            System.out.println("✅ Imagen guardada en: " + imagePath);
             
             String pdfPath = saveFile(pdfFile, "pdfs");
+            System.out.println("✅ PDF guardado en: " + pdfPath);
             
             ResourceRequestDTO dtoWithPaths = new ResourceRequestDTO(
-                imagePath,
-                requestDTO.name(),
-                requestDTO.intro(),
-                requestDTO.description(),
-                pdfPath
+                requestDTO.name(),        
+                requestDTO.intro(),       
+                requestDTO.description(), 
+                imagePath,                
+                pdfPath                  
             );
             
+            System.out.println("=== DTO CON PATHS CREADO ===");
+            System.out.println("name: [" + dtoWithPaths.name() + "]");
+            System.out.println("intro: [" + dtoWithPaths.intro() + "]");
+            System.out.println("description: [" + dtoWithPaths.description() + "]");
+            System.out.println("imageFile: [" + dtoWithPaths.imageFile() + "]");
+            System.out.println("pdfFile: [" + dtoWithPaths.pdfFile() + "]");
+            
+            System.out.println("🔄 Mapeando a Entity...");
             ResourceEntity newEntity = resourceMapper.toEntity(dtoWithPaths);
+            
+            System.out.println("=== ENTITY MAPEADA ===");
+            System.out.println("name: [" + newEntity.getName() + "]");
+            System.out.println("intro: [" + newEntity.getIntro() + "]");
+            System.out.println("description: [" + newEntity.getDescription() + "]");
+            System.out.println("imageFile: [" + newEntity.getImageFile() + "]");
+            System.out.println("pdfFile: [" + newEntity.getPdfFile() + "]");
+            
+            System.out.println("💾 Guardando en BD...");
             ResourceEntity savedEntity = resourceRepository.save(newEntity);
+            System.out.println("✅ Guardado con ID: " + savedEntity.getId());
             
             return resourceMapper.toDetailsResponseDTO(savedEntity);
             
@@ -55,39 +84,40 @@ public class AdminResourceService {
         }
     }
 
-    public ResourceDetailsResponseDTO update(Long id, ResourceRequestDTO requestDTO, 
-                                        MultipartFile imageFile, MultipartFile pdfFile) {
-    try {
-        ResourceEntity existingEntity = resourceRepository.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("Recurso no encontrado con ID: " + id));
+    public ResourceDetailsResponseDTO update(Long id, ResourceRequestDTO requestDTO, MultipartFile imageFile, MultipartFile pdfFile) {
+        try {
+            ResourceEntity existingEntity = resourceRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Recurso no encontrado con ID: " + id));
 
-        existingEntity.setName(requestDTO.name());
-        existingEntity.setIntro(requestDTO.intro());
-        existingEntity.setDescription(requestDTO.description());
-        
-        if (imageFile != null && !imageFile.isEmpty()) {
-            deleteFile(existingEntity.getImageFile());
-            String newImagePath = saveFile(imageFile, "images");
-            existingEntity.setImageFile(newImagePath);
-        } else if (requestDTO.imageFile() != null && !requestDTO.imageFile().isBlank()) {
-            existingEntity.setImageFile(requestDTO.imageFile());
+            existingEntity.setName(requestDTO.name());
+            existingEntity.setIntro(requestDTO.intro());
+            existingEntity.setDescription(requestDTO.description());
+            
+            if (imageFile != null && !imageFile.isEmpty()) {
+                deleteFile(existingEntity.getImageFile());
+                String newImagePath = saveFile(imageFile, "images");
+                existingEntity.setImageFile(newImagePath);
+            } else if (requestDTO.imageFile() != null && !requestDTO.imageFile().isBlank()) {
+                existingEntity.setImageFile(requestDTO.imageFile());
+            }
+           
+            
+            if (pdfFile != null && !pdfFile.isEmpty()) {
+                deleteFile(existingEntity.getPdfFile());
+                String newPdfPath = saveFile(pdfFile, "pdfs");
+                existingEntity.setPdfFile(newPdfPath);
+            } else if (requestDTO.pdfFile() != null && !requestDTO.pdfFile().isBlank()) {
+                existingEntity.setPdfFile(requestDTO.pdfFile());
+            }
+            
+            ResourceEntity updatedEntity = resourceRepository.save(existingEntity);
+            return resourceMapper.toDetailsResponseDTO(updatedEntity);
+            
+        } catch (IOException e) {
+            throw new RuntimeException("Error al actualizar archivos: " + e.getMessage(), e);
         }
-        
-        if (pdfFile != null && !pdfFile.isEmpty()) {
-            deleteFile(existingEntity.getPdfFile());
-            String newPdfPath = saveFile(pdfFile, "pdfs");
-            existingEntity.setPdfFile(newPdfPath);
-        } else if (requestDTO.pdfFile() != null && !requestDTO.pdfFile().isBlank()) {
-            existingEntity.setPdfFile(requestDTO.pdfFile());
-        }
-        
-        ResourceEntity updatedEntity = resourceRepository.save(existingEntity);
-        return resourceMapper.toDetailsResponseDTO(updatedEntity);
-        
-    } catch (IOException e) {
-        throw new RuntimeException("Error al actualizar archivos: " + e.getMessage(), e);
     }
-}
+
     public void delete(Long id) {
         ResourceEntity entity = resourceRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("Recurso a borrar no encontrado con ID: " + id));
@@ -103,12 +133,8 @@ public class AdminResourceService {
         return resourceMapper.toListItemDTOs(entities);
     }
     
-    // handleFiles 
     
     private String saveFile(MultipartFile file, String folder) throws IOException {
-        System.out.println("🔍 Guardando archivo en folder: " + folder);
-        System.out.println("🔍 uploadPath: " + uploadPath);
-
         if (folder.equals("images") && !isValidImage(file)) {
             throw new IllegalArgumentException("El archivo debe ser una imagen válida (jpg, jpeg, png, gif)");
         }
@@ -121,22 +147,13 @@ public class AdminResourceService {
         String fileName = System.currentTimeMillis() + "_" + UUID.randomUUID().toString() + extension;
         
         Path uploadDir = Paths.get(uploadPath, folder);
-        System.out.println("📂 Directorio completo: " + uploadDir.toAbsolutePath());
 
         if (!Files.exists(uploadDir)) {
-            System.out.println("⚠️ Directorio no existe, creándolo...");
-            Files.createDirectories(uploadDir);System.out.println("✅ Directorio creado");
-        } else {
-            System.out.println("✅ Directorio ya existe");
+            Files.createDirectories(uploadDir);
         }
         
-        // Save file in directory
         Path filePath = uploadDir.resolve(fileName);
-        System.out.println("💾 Guardando archivo en: " + filePath.toAbsolutePath());
-
         Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-        System.out.println("✅ Archivo guardado correctamente");
-
         
         return "/uploads/" + folder + "/" + fileName;
     }

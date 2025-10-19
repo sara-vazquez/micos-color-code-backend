@@ -39,11 +39,11 @@ public class AdminResourceController {
         @RequestParam("pdf") MultipartFile pdfFile) {
     
         ResourceRequestDTO requestDTO = new ResourceRequestDTO(
-            null, 
             name,
             intro,
             description,
-            null  
+            null,
+            null
         );
         
         ResourceDetailsResponseDTO createdResource = adminResourceService.create(requestDTO, imageFile, pdfFile);
@@ -62,10 +62,10 @@ public class AdminResourceController {
         @RequestParam(value = "existingPdfPath", required = false) String existingPdfPath) {
 
         ResourceRequestDTO requestDTO = new ResourceRequestDTO(
-            existingImagePath, 
             name,
             intro,
             description,
+            existingImagePath, 
             existingPdfPath    
         );
 
