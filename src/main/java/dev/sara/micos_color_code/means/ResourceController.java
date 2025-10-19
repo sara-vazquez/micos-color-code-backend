@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/resources")
+@RequestMapping("/users/resources")
 @RequiredArgsConstructor
 public class ResourceController {
     
@@ -23,7 +23,7 @@ public class ResourceController {
         return ResponseEntity.ok(resources);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/users/{id}")
     public ResponseEntity<ResourceDetailsResponseDTO> getResourceDetails(@PathVariable Long id) {
         ResourceDetailsResponseDTO details = resourceService.findByIdPublic(id);
         return ResponseEntity.ok(details);
