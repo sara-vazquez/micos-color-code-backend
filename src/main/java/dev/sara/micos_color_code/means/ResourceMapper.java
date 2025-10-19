@@ -18,7 +18,7 @@ public class ResourceMapper {
     }
 
     public ResourceDetailsResponseDTO toDetailsResponseDTO(ResourceEntity entity) {
-        return new ResourceDetailsResponseDTO(entity.getId(), entity.getName(), entity.getDescription(),  entity.getImageFile(), entity.getPdfFile());
+        return new ResourceDetailsResponseDTO(entity.getId(), entity.getName(), entity.getIntro(), entity.getDescription(),  entity.getImageFile(), entity.getPdfFile());
     }
 
     public ResourceItemResponseDTO toItemResponseDTO(ResourceEntity entity) {
