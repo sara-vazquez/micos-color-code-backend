@@ -26,12 +26,6 @@ public class AdminResourceService {
     
     public ResourceDetailsResponseDTO create(ResourceRequestDTO requestDTO, MultipartFile imageFile, MultipartFile pdfFile) {
         try {
-            System.out.println("=== CREATE - INICIO ===");
-            System.out.println("DTO recibido - name: [" + requestDTO.name() + "]");
-            System.out.println("DTO recibido - intro: [" + requestDTO.intro() + "]");
-            System.out.println("DTO recibido - description: [" + requestDTO.description() + "]");
-            System.out.println("DTO recibido - imageFile: [" + requestDTO.imageFile() + "]");
-            System.out.println("DTO recibido - pdfFile: [" + requestDTO.pdfFile() + "]");
             
             if (imageFile == null || imageFile.isEmpty()) {
                 throw new IllegalArgumentException("La imagen es obligatoria");
@@ -56,26 +50,8 @@ public class AdminResourceService {
                 pdfPath                  
             );
             
-            System.out.println("=== DTO CON PATHS CREADO ===");
-            System.out.println("name: [" + dtoWithPaths.name() + "]");
-            System.out.println("intro: [" + dtoWithPaths.intro() + "]");
-            System.out.println("description: [" + dtoWithPaths.description() + "]");
-            System.out.println("imageFile: [" + dtoWithPaths.imageFile() + "]");
-            System.out.println("pdfFile: [" + dtoWithPaths.pdfFile() + "]");
-            
-            System.out.println("🔄 Mapeando a Entity...");
             ResourceEntity newEntity = resourceMapper.toEntity(dtoWithPaths);
-            
-            System.out.println("=== ENTITY MAPEADA ===");
-            System.out.println("name: [" + newEntity.getName() + "]");
-            System.out.println("intro: [" + newEntity.getIntro() + "]");
-            System.out.println("description: [" + newEntity.getDescription() + "]");
-            System.out.println("imageFile: [" + newEntity.getImageFile() + "]");
-            System.out.println("pdfFile: [" + newEntity.getPdfFile() + "]");
-            
-            System.out.println("💾 Guardando en BD...");
             ResourceEntity savedEntity = resourceRepository.save(newEntity);
-            System.out.println("✅ Guardado con ID: " + savedEntity.getId());
             
             return resourceMapper.toDetailsResponseDTO(savedEntity);
             
