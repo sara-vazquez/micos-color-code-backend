@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.security.core.Authentication;
 
+import dev.sara.micos_color_code.security.SecurityUtils;
 import jakarta.validation.Valid;
 
 @RestController
@@ -20,15 +20,10 @@ public class GameSessionController {
     }
 
     @PostMapping
-    public ResponseEntity<GameSessionResponseDTO> completeGameSession( @PathVariable Long gameId, @Valid @RequestBody GameSessionRequestDTO request, Authentication authentication) {
+    public ResponseEntity<GameSessionResponseDTO> completeGameSession( @PathVariable Long gameId, @Valid @RequestBody GameSessionRequestDTO request) {
         
-        Long userId = getUserIdFromAuthentication(authentication);
+        Long userId = SecurityUtils.getCurrentUserId();
         GameSessionResponseDTO response = gameSessionService.completeGameSession(userId, gameId, request);
         return ResponseEntity.ok(response);
     }
-    
-    /*private Long getUserIdFromAuthentication(Authentication authentication) {
-        // Tu lógica de autenticación aquí
-        return 1L; // placeholder
-    } */
 }
