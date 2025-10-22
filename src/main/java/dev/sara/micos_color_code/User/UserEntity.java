@@ -5,6 +5,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import dev.sara.micos_color_code.role.RoleEntity;
+import dev.sara.micos_color_code.sessions.GameSessionEntity;
+import dev.sara.micos_color_code.stats.UserGameStatsEntity;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -14,6 +17,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -54,4 +58,10 @@ public class UserEntity {
 
     @Column(name = "token_creation_date")
     private LocalDateTime tokenCreationDate;
+
+    @OneToMany(mappedBy="user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<UserGameStatsEntity> gameStats = new HashSet<>();
+
+    @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
+    private Set<GameSessionEntity> sessions = new HashSet<>();
 }
