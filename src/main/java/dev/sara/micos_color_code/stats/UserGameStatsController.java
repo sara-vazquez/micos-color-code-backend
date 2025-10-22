@@ -5,7 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.security.core.Authentication;
+
+import dev.sara.micos_color_code.security.SecurityUtils;
 
 @RestController
 @RequestMapping("/users/play/{gameId}/ranking")
@@ -17,17 +18,10 @@ public class UserGameStatsController {
     }
     
     @GetMapping
-    public ResponseEntity<RankingResponseDTO> getRanking(
-            @PathVariable Long gameId,
-            Authentication authentication) {
+    public ResponseEntity<RankingResponseDTO> getRanking(@PathVariable Long gameId) {
         
-        Long userId = getUserIdFromAuthentication(authentication);
+        Long userId = SecurityUtils.getCurrentUserId();
         RankingResponseDTO response = userGameStatsService.getRanking(gameId, userId);
         return ResponseEntity.ok(response);
     }
-    
-    /*private Long getUserIdFromAuthentication(Authentication authentication) {
-        // Tu lógica de autenticación aquí
-        return 1L; // placeholder
-    }*/
 }
