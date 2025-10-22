@@ -43,4 +43,7 @@ public class GameSessionEntity {
     
     @Column(name="time_completed_seconds")
     private int timeCompleted;
+
+    @Column(name="level", nullable=false)
+    private int level;
 }
