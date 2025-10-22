@@ -1,7 +1,5 @@
 package dev.sara.micos_color_code.security;
 
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,14 +20,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         UserEntity user = userRepository.findByEmail(email)
         .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado con email: " + email));
 
-        return User.builder()
-                .username(user.getEmail())
-                .password(user.getPassword())
-                .disabled(!user.isEnabled()) 
-                .authorities(user.getRoles().stream()
-                        .map(role -> new SimpleGrantedAuthority(role.getName()))
-                        .toList())
-                .build();
+        return new CustomUserDetails(user);
     }
     
 }
