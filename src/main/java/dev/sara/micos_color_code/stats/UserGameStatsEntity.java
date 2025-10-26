@@ -37,6 +37,9 @@ public class UserGameStatsEntity {
     @JoinColumn(name = "game_id", nullable = false)
     private GameEntity game;
 
+    @Column(name = "games_played")
+    private int gamesPlayed;
+
     @Column(name="total_points", nullable = false)
     private int totalPoints;
 

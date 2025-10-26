@@ -1,5 +1,6 @@
 package dev.sara.micos_color_code.stats;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,9 +17,12 @@ import dev.sara.micos_color_code.user.UserRepository;
 
 @Service
 public class UserGameStatsService {
+
     private final UserGameStatsRepository userGameStatsRepository;
     private final UserRepository userRepository;
     private final GameRepository gameRepository;
+
+    private static final int MAX_LEVEL = 4;
 
     public UserGameStatsService(UserGameStatsRepository userGameStatsRepository, UserRepository userRepository, GameRepository gameRepository) {
         this.userGameStatsRepository = userGameStatsRepository;
@@ -27,21 +31,29 @@ public class UserGameStatsService {
     }
 
     @Transactional
-    public int updateUserStats(Long userId, Long gameId, int pointsToAdd, int levels, int currentLevel) {
+    public int updateUserStats(Long userId, Long gameId, int pointsToAdd, int levelPlayed, boolean completed) {
         UserEntity user = userRepository.findById(userId)
             .orElseThrow(() -> new GameNotFoundException("Usuario no encontrado"));
         GameEntity game = gameRepository.findById(gameId)
             .orElseThrow(() -> new GameNotFoundException("Juego no encontrado"));
-
-            UserGameStatsEntity stats = userGameStatsRepository
+        
+        UserGameStatsEntity stats = userGameStatsRepository
             .findByUser_IdAndGame_Id(userId, gameId)
             .orElse(UserGameStatsEntity.builder()
                 .user(user)
                 .game(game)
                 .totalPoints(0)
+                .gamesPlayed(0)
+                .currentLevel(1)
                 .build());
 
         stats.setTotalPoints(stats.getTotalPoints() + pointsToAdd);
+        stats.setGamesPlayed(stats.getGamesPlayed() + 1);
+        
+        if (completed && stats.getCurrentLevel() < MAX_LEVEL) {
+            stats.setCurrentLevel(stats.getCurrentLevel() + 1);
+        }
+        
         userGameStatsRepository.save(stats);
         
         return stats.getTotalPoints();
@@ -69,6 +81,8 @@ public class UserGameStatsService {
             .orElse(null);
         
         RankingPlayerDTO currentUser = null;
+        int currentLevel = 1; 
+
         if (currentUserStats != null) {
             Long playersAhead = userGameStatsRepository
                 .countPlayersWithHigherScore(gameId, currentUserStats.getTotalPoints());
@@ -79,8 +93,18 @@ public class UserGameStatsService {
                 currentUserStats.getTotalPoints(),
                 position
             );
+
+            currentLevel = currentUserStats.getCurrentLevel();
         }
         
-        return new RankingResponseDTO(top3, currentUser);
+        return new RankingResponseDTO(top3, currentUser, currentLevel);
+    }
+
+    /* Gets user current level in a game */
+    public int getCurrentLevel(Long userId, Long gameId) {
+        return userGameStatsRepository
+            .findByUser_IdAndGame_Id(userId, gameId)
+            .map(UserGameStatsEntity::getCurrentLevel)
+            .orElse(1);
     }
 }
