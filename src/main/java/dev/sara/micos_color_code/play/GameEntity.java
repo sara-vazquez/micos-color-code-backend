@@ -32,7 +32,7 @@ public class GameEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "gameName", nullable = false, unique = true)
+    @Column(name = "game_name", nullable = false, unique = true)
     private String gameName;
 
     @OneToMany(mappedBy="game", cascade = CascadeType.ALL, orphanRemoval = true)
