@@ -30,14 +30,12 @@ public class SecurityUtils {
             JwtAuthenticationToken jwtAuth = (JwtAuthenticationToken) authentication;
             Jwt jwt = jwtAuth.getToken();
             
-            // El subject del JWT es el email
             String email = jwt.getSubject();
             
             if (email == null || email.isEmpty()) {
                 throw new UnauthorizedException("Token sin email válido");
             }
             
-            // Buscar usuario por email
             UserEntity user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UnauthorizedException("Usuario no encontrado: " + email));
             
