@@ -39,5 +39,8 @@ public class UserGameStatsEntity {
 
     @Column(name="total_points", nullable = false)
     private int totalPoints;
+
+    @Column(name = "current_level")
+    private int currentLevel;
     
 }
