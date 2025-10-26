@@ -37,13 +37,14 @@ public class UserGameStatsEntity {
     @JoinColumn(name = "game_id", nullable = false)
     private GameEntity game;
 
+    @Column(name = "total_points", nullable = false)
+    private Integer totalPoints;
+    
     @Column(name = "games_played")
-    private int gamesPlayed;
-
-    @Column(name="total_points", nullable = false)
-    private int totalPoints;
-
-    @Column(name = "current_level")
-    private int currentLevel;
+    private Integer gamesPlayed;
+    
+    @Column(name = "current_level", nullable = false)
+    @Builder.Default
+    private Integer currentLevel = 1;
     
 }

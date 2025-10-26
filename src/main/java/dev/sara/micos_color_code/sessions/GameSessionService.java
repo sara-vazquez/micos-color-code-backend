@@ -43,7 +43,7 @@ public class GameSessionService {
         gameSessionRepository.save(session);
 
         //updates Ranking
-        int newTotalPoints = userGameStatsService.updateUserStats(
+        Integer newTotalPoints = userGameStatsService.updateUserStats(
             userId, 
             gameId, 
             request.points(),
@@ -51,7 +51,7 @@ public class GameSessionService {
             request.completed()
         );
 
-        int currentLevel = userGameStatsService.getCurrentLevel(userId, gameId);
+        Integer currentLevel = userGameStatsService.getCurrentLevel(userId, gameId);
         
         return new GameSessionResponseDTO(request.points(), newTotalPoints, currentLevel);
     }
