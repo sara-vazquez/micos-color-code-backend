@@ -38,11 +38,13 @@ public class GameSessionService {
             .game(game)
             .points(request.points())
             .timeCompleted(request.timeCompleted())
+            .levels(request.levels())
+            .currentLevel(request.currentLevel())
             .build();
         gameSessionRepository.save(session);
 
         //updates Ranking
-        int newTotalPoints = userGameStatsService.updateUserStats(userId, gameId, request.points());
+        int newTotalPoints = userGameStatsService.updateUserStats(userId, gameId, request.points(), request.levels(), request.currentLevel());
         return new GameSessionResponseDTO(request.points(), newTotalPoints);
     }
     

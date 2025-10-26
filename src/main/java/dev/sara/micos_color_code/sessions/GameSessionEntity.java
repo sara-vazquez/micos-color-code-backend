@@ -44,5 +44,8 @@ public class GameSessionEntity {
     private int timeCompleted;
 
     @Column(name="levels", nullable=false)
-    private int level;
+    private int levels;
+
+    @Column(name = "current_level")
+    private int currentLevel; 
 }

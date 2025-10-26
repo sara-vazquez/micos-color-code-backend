@@ -1,13 +1,12 @@
 package dev.sara.micos_color_code.stats;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.data.domain.Pageable;
 
 import dev.sara.micos_color_code.play.GameEntity;
 import dev.sara.micos_color_code.play.GameNotFoundException;
@@ -28,7 +27,7 @@ public class UserGameStatsService {
     }
 
     @Transactional
-    public int updateUserStats(Long userId, Long gameId, int pointsToAdd) {
+    public int updateUserStats(Long userId, Long gameId, int pointsToAdd, int levels, int currentLevel) {
         UserEntity user = userRepository.findById(userId)
             .orElseThrow(() -> new GameNotFoundException("Usuario no encontrado"));
         GameEntity game = gameRepository.findById(gameId)
