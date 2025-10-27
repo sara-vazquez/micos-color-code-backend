@@ -20,18 +20,14 @@ public class RequestLogginFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
         throws ServletException, IOException {
          if (request.getRequestURI().contains("/feedback")) {
-            ContentCachingRequestWrapper wrappedRequest = new ContentCachingRequestWrapper(request);
+            RepeatableContentCachingRequestWrapper wrappedRequest = new RepeatableContentCachingRequestWrapper(request);
+            
+            String body = wrappedRequest.getBody();
+            System.out.println("📦 Body RAW: [" + body + "]");
+            System.out.println("📦 Body length: " + body.length());
+            System.out.println("📦 Content-Type: " + request.getContentType());
             
             filterChain.doFilter(wrappedRequest, response);
-            
-            byte[] content = wrappedRequest.getContentAsByteArray();
-            System.out.println("📦 Body RAW length: " + content.length);
-            if (content.length > 0) {
-                String body = new String(content, wrappedRequest.getCharacterEncoding());
-                System.out.println("📦 Body RAW: [" + body + "]");
-            } else {
-                System.out.println("⚠️ Body está vacío!");
-            }
         } else {
             filterChain.doFilter(request, response);
         }
