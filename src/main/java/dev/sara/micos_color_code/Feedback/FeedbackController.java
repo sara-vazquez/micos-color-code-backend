@@ -22,18 +22,14 @@ public class FeedbackController {
     private FeedbackService feedbackService;
 
     @PostMapping(consumes = "application/json", produces = "application/json")
-    public ResponseEntity<String> sendFeedback(HttpServletRequest request, @RequestBody(required = false) FeedbackRequestDTO feedback) throws IOException {
+    public ResponseEntity<String> sendFeedback(@RequestBody FeedbackRequestDTO feedback) {
     
-    String body = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
-    System.out.println("📦 Body RAW recibido: [" + body + "]");
-    System.out.println("📦 Body length: " + body.length());
-    System.out.println("🔍 DTO deserializado:");
-    System.out.println("📧 Email: " + (feedback != null ? feedback.getEmail() : "DTO es null"));
-    System.out.println("📝 Mensaje: " + (feedback != null ? feedback.getMessage() : "DTO es null"));
+        System.out.println("🔍 DTO deserializado:");
+        System.out.println("📧 Email: " + feedback.getEmail());
+        System.out.println("📝 Mensaje: " + feedback.getMessage());
     
-    if (feedback != null) {
         feedbackService.sendFeedback(feedback);
-    }
+    
         return ResponseEntity.ok("Feedback enviado con éxito! ✅");
     }
 }
