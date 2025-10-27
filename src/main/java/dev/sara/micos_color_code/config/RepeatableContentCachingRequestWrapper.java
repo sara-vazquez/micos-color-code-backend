@@ -3,7 +3,9 @@ package dev.sara.micos_color_code.config;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 import jakarta.servlet.ReadListener;
 import jakarta.servlet.ServletInputStream;
@@ -12,18 +14,19 @@ import jakarta.servlet.http.HttpServletRequestWrapper;
 
 public class RepeatableContentCachingRequestWrapper extends HttpServletRequestWrapper {
 
-    private byte[] body;
+    private final byte[] body;
 
     public RepeatableContentCachingRequestWrapper(HttpServletRequest request) throws IOException {
         super(request);
-        this.body = request.getInputStream().readAllBytes();
+        InputStream inputStream = request.getInputStream();
+        this.body = inputStream.readAllBytes();
     }
 
-    @Override
+        @Override
     public ServletInputStream getInputStream() throws IOException {
+        final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(body);
+        
         return new ServletInputStream() {
-            private ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(body);
-
             @Override
             public boolean isFinished() {
                 return byteArrayInputStream.available() == 0;
@@ -36,7 +39,7 @@ public class RepeatableContentCachingRequestWrapper extends HttpServletRequestWr
 
             @Override
             public void setReadListener(ReadListener listener) {
-                throw new UnsupportedOperationException();
+                // Not implemented
             }
 
             @Override
@@ -48,11 +51,11 @@ public class RepeatableContentCachingRequestWrapper extends HttpServletRequestWr
 
     @Override
     public BufferedReader getReader() throws IOException {
-        return new BufferedReader(new InputStreamReader(this.getInputStream()));
+        return new BufferedReader(new InputStreamReader(this.getInputStream(), StandardCharsets.UTF_8));
     }
 
     public String getBody() {
-        return new String(body);
+        return new String(body, StandardCharsets.UTF_8);
     }
     
 }
