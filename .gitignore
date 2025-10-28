@@ -35,10 +35,6 @@ build/
 .vscode/
 .DS_Store/
 
-application.properties
-application-devh2.properties
-application-devmysql.properties
-application.yml
 compose.yaml
 
 .env
