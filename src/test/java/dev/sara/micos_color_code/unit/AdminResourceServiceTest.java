@@ -1,4 +1,4 @@
-package dev.sara.micos_color_code.unitTests;
+package dev.sara.micos_color_code.unit;
 
 import java.io.IOException;
 import java.util.Optional;

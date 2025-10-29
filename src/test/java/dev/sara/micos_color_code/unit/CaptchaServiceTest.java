@@ -1,4 +1,4 @@
-package dev.sara.micos_color_code.unitTests;
+package dev.sara.micos_color_code.unit;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.BeforeEach;
