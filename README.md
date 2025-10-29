@@ -9,6 +9,10 @@ Con la web se pretende que mediante una forma lúdica, visual y sencilla, contin
 
 ## Diagrama de clases UML
 
+## Diagrama entidad-relación
+
+## Estructura de carpetas
+
 ## Instalación y ejecución
 1. Haz fork del repositorio
 2. Crea una rama para tu feature/fix
