@@ -43,3 +43,4 @@ Con la web se pretende que mediante una forma lúdica, visual y sencilla, contin
   - Eliminar 🗑
 
 ## 🧪 Test coverage
+![Coverage provisional de los test de back](src/assets/back-coverage.png)
