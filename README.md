@@ -154,7 +154,6 @@ erDiagram
 ## 📂 Estructura de carpetas
 
 ```
-.
 ├── mvn
 ├── src
 │   ├── main
@@ -242,6 +241,7 @@ erDiagram
 │   │       ├── application-devmysql.properties
 │   │       ├── application.properties
 │   │       └── data.sql
+│   │
 │   └── test
 │       └── java
 │           └── dev
@@ -265,7 +265,6 @@ erDiagram
 │	                   ├── TestcontainersConfiguration.java
 │	                   └── TestMicosColorCodeApplication.java
 │                   
-│                   
 ├── uploads
 │ 	├── images
 │ 	└── pdfs
@@ -278,7 +277,6 @@ erDiagram
 ├── pom.xml
 └── README.md
 ```
-
 
 ## 🚀 Instalación y ejecución
 1. Haz fork del repositorio
@@ -312,7 +310,6 @@ erDiagram
 👉 http://localhost:8080
 
 
-
 ## 🔗 Endpoints principales
 
 1. 🔐 **AUTENTICACIÓN**
@@ -340,8 +337,8 @@ erDiagram
 	- GET http://localhost:8080/users/play/{gameId}/ranking - Get game ranking chart (USER)
 
 
-
 ## 📯 Pruebas en Postman
+![Aquí encontrarás la colección de Postman con todas las pruebas realizadas y documentadas](https://lunar-rocket-4378638.postman.co/workspace/Micos-Color-Code~285e65ce-5ab6-47e7-b8b9-561f4583a023/collection/45994293-ef366550-d042-46ab-985c-3a5388e09d83?action=share&creator=45994293)
 
 ## 📋 Funcionalidades principales del ADMIN
 ### Gestión de recursos:
@@ -350,10 +347,8 @@ erDiagram
   - Editar ✏️
   - Eliminar 🗑
 
-
 ## 🧪 Test coverage
 ![Coverage provisional de los test de back](src/assets/back-coverage.png)
-
 
 ### Autora
 Sara Vázquez
