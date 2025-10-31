@@ -15,22 +15,63 @@ Con la web se pretende que mediante una forma lúdica, visual y sencilla, contin
 
 ## Instalación y ejecución
 1. Haz fork del repositorio
+
 2. Crea una rama para tu feature/fix
-3. Configura la base de datos MySQL (ver `application.properties`) [Aquí tienes una guía](https://www.notion.so/sara-vazquez/Instalaciones-back-28dd5565c5b6805e823dc9f9ec5170d9)
+	 ```
+	 git checkout -b feature/nueva-funcionalidad
+	 ```
+
+3. Configura la base de datos MySQL (ver `application.properties`) [consulta la guía con las instalaciones que necesitas ↗︎](https://www.notion.so/sara-vazquez/Instalaciones-back-28dd5565c5b6805e823dc9f9ec5170d9)
+
 4. Haz tus cambios y crea un pull request
+ 	 ```
+	 git commit -m "Descripción breve del cambio"
+	 git push origin feature/nueva-funcionalidad
+	 ```
+
 5. Levanta los servicios con Docker Compose:
 	 ```
 	 docker compose up -d
 	 ```
+
 6. Ejecuta la aplicación Spring Boot:
 	 ```
 	 mvn spring-boot:run
 	 ```
+
   La aplicación se levantará en:
 👉 http://localhost:8080
 
 
 ## Endpoints principales
+
+1. 🔐 Authentication
+
+POST http://localhost:8080/auth/login - Login (USER, ADMIN)
+POST http://localhost:8080/auth/logout - Logout (USER, ADMIN)
+POST http://localhost:8080/register - Registration (First user registered: role ADMIN)
+GET http://localhost:8080/captcha/generate - Generate captcha - register (USER, ADMIN)
+
+2. 📚 Resources
+
+**ADMIN**
+GET http://localhost:8080/admin/resources - Get all resources 
+POSThttp://localhost:8080/admin/resources  - Add new resources
+PUT http://localhost:8080/admin/resources/{id} - Update a resource 
+DEL http://localhost:8080/admin/resources/{id} - Delete a resource
+
+**USER**
+GET http://localhost:8080/users/resources - Get all resources
+
+3. 📄 Feedback
+
+POST http://localhost:8080/feedback - Create feedback - email service (USER)
+
+4. 🎮 Games
+
+POST http://localhost:8080/users/play/{gameId}/sessions - Create game session (USER)
+GET http://localhost:8080/users/play/{gameId}/ranking - Get game ranking chart (USER)
+
 
 ## 📯 Pruebas en Postman
 
