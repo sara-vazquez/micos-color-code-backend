@@ -10,6 +10,72 @@ Con la web se pretende que mediante una forma lúdica, visual y sencilla, contin
 ## Diagrama de clases UML
 
 ## Diagrama entidad-relación
+```mermaid
+---
+config:
+  theme: 'forest'
+---
+
+erDiagram
+    users ||--o{ game_sessions : "plays"
+    users ||--o{ user_game_stats : "has"
+    users ||--o{ user_roles : "has"
+    games ||--o{ game_sessions : "contains"
+    games ||--o{ user_game_stats : "register"
+    roles ||--o{ user_roles : "assigns"
+
+    users {
+        int id PK
+        string username
+        string password
+        string confirmation_token
+        datetime token_creation_date
+        boolean enabled
+    }
+
+    games {
+        int id PK
+        string game_name
+    }
+
+    game_sessions {
+        int id PK
+        int levels
+        int points
+        int time_completed_seconds
+        int game_id FK
+        int user_id FK
+        int current_level
+    }
+
+    user_game_stats {
+        int id PK
+        int total_points
+        int game_id FK
+        int user_id FK
+        int current_level
+        int games_played
+    }
+
+    roles {
+        int id_role PK
+        string name
+    }
+
+    user_roles {
+        int user_id FK
+        int role_id FK
+    }
+
+    resources {
+        int id PK
+        string description
+        string image
+        string intro
+        string name
+        string pdf
+    }
+```
 
 ## Estructura de carpetas
 
