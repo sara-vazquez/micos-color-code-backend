@@ -197,7 +197,7 @@ erDiagram
 
 **ADMIN**
 - GET http://localhost:8080/admin/resources - Get all resources 
-- POSThttp://localhost:8080/admin/resources  - Add new resources
+- POST http://localhost:8080/admin/resources  - Add new resources
 - PUT http://localhost:8080/admin/resources/{id} - Update a resource 
 - DEL http://localhost:8080/admin/resources/{id} - Delete a resource
 
