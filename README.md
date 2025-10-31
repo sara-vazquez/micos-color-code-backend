@@ -1,15 +1,88 @@
-# Micos color code
+# MICOS COLOR CODE
 
 MICOS es una web (mobile-first) dirigida a niños y niñas de entre 3 y 8 años con daltonismo dicromático. Surge tras la creación del sistema visual "Micos color code", pensado para facilitar la identificación de los colores por parte de los peques con esta alteración visual. 
 
 Con la web se pretende que mediante una forma lúdica, visual y sencilla, continúen con el aprendizaje también a través de las pantallas. 
 
-## Documentación
-- [Si accedes a este enlace te encontrarás con la documentación del proyecto](https://www.notion.so/sara-vazquez/MICOS-PROYECTO-FINAL-23fd5565c5b68048a775fc74e9a9f749)
+[Aquí encontrarás la documentación del proyecto ↗︎](https://www.notion.so/sara-vazquez/MICOS-PROYECTO-FINAL-23fd5565c5b68048a775fc74e9a9f749)
 
-## Diagrama de clases UML
+## 📓 Diagrama de clases UML
+```mermaid
+---
+config:
+  theme: 'forest'
+---
 
-## Diagrama entidad-relación
+classDiagram
+    %% ===== ENTITIES =====
+    class UserEntity {
+        -Long id
+        -String username
+        -String email
+        -String password
+        -boolean enabled
+        -String confirmationToken
+        -LocalDateTime tokenCreationDate
+        -Set~RoleEntity~ roles
+        -Set~UserGameStatsEntity~ gameStats
+        -Set~GameSessionEntity~ sessions
+    }
+
+    class RoleEntity {
+        -Long id_role
+        -String name
+        -Set~UserEntity~ users
+    }
+
+    class GameEntity {
+        -Long id
+        -String gameName
+        -Set~UserGameStatsEntity~ gameStats
+        -Set~GameSessionEntity~ sessions
+    }
+
+    class UserGameStatsEntity {
+        -Long id
+        -UserEntity user
+        -GameEntity game
+        -Integer totalPoints
+        -Integer gamesPlayed
+        -Integer currentLevel
+    }
+
+    class GameSessionEntity {
+        -Long id
+        -UserEntity user
+        -GameEntity game
+        -int points
+        -int timeCompleted
+        -int levels
+        -int currentLevel
+    }
+
+    class ResourceEntity {
+        -Long id
+        -String imageFile
+        -String name
+        -String intro
+        -String description
+        -String pdfFile
+    }
+
+    %% ===== RELATIONSHIPS: Entities =====
+    UserEntity "1" --> "*" UserGameStatsEntity : has
+    UserEntity "1" --> "*" GameSessionEntity : has
+    UserEntity "*" --> "*" RoleEntity : has
+    GameEntity "1" --> "*" UserGameStatsEntity : tracks
+    GameEntity "1" --> "*" GameSessionEntity : tracks
+    UserGameStatsEntity "*" --> "1" UserEntity : belongs to
+    UserGameStatsEntity "*" --> "1" GameEntity : belongs to
+    GameSessionEntity "*" --> "1" UserEntity : belongs to
+    GameSessionEntity "*" --> "1" GameEntity : belongs to
+
+```
+
+## 📙 Diagrama entidad-relación
 ```mermaid
 ---
 config:
@@ -77,9 +150,9 @@ erDiagram
     }
 ```
 
-## Estructura de carpetas
+## 📂 Estructura de carpetas
 
-## Instalación y ejecución
+## 🚀 Instalación y ejecución
 1. Haz fork del repositorio
 
 2. Crea una rama para tu feature/fix
@@ -87,7 +160,8 @@ erDiagram
 	 git checkout -b feature/nueva-funcionalidad
 	 ```
 
-3. Configura la base de datos MySQL (ver `application.properties`) [consulta la guía con las instalaciones que necesitas ↗︎](https://www.notion.so/sara-vazquez/Instalaciones-back-28dd5565c5b6805e823dc9f9ec5170d9)
+3. Configura la base de datos MySQL (ver `application.properties`) 
+[consulta la guía con las instalaciones que necesitas ↗︎](https://www.notion.so/sara-vazquez/Instalaciones-back-28dd5565c5b6805e823dc9f9ec5170d9)
 
 4. Haz tus cambios y crea un pull request
  	 ```
@@ -109,7 +183,7 @@ erDiagram
 👉 http://localhost:8080
 
 
-## Endpoints principales
+## 🔗 Endpoints principales
 
 1. 🔐 Authentication
 
@@ -143,7 +217,7 @@ GET http://localhost:8080/users/play/{gameId}/ranking - Get game ranking chart (
 
 ## 📋 Funcionalidades principales del ADMIN
 
-- Gestión de recursos:
+- **Gestión de recursos:**
   - Listar 📄
   - Añadir ➕
   - Editar ✏️
