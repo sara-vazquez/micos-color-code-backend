@@ -248,14 +248,16 @@ erDiagram
 │               └── sara
 │					└── micos_color_code
 │	                   ├── integration
-│	                   │  ├── RegisterControllerIntegrationTest.java
 │	                   │  ├── AdminResourceControllerIntegrationTest.java
+│	                   │  ├── RegisterControllerIntegrationTest.java
+│	                   │  └── ResourceControllerIntegrationTest.java
 │	                   ├── unit
 │	                   │  ├── AdminResourceServiceTest.java
 │	                   │  ├── AuthServiceImplTest.java
 │	                   │  ├── CaptchaServiceTest.java
 │	                   │  ├── FeedbackServiceTest.java
 │	                   │  ├── GameSessionServiceTest.java
+│	                   │  ├── JwtServiceTest.java
 │	                   │  ├── RegisterServiceImplTest.java
 │	                   │  ├── ResourceServiceTest.java
 │	                   │  ├── UserEntityTest.java
@@ -357,7 +359,7 @@ erDiagram
   - Eliminar 🗑
 
 ## 🧪 Test coverage
-![Coverage provisional de los test de back](src/assets/back-coverage.png)
+![Coverage test de back](src/assets/coverage-back.png)
 
 ### Autora
 Sara Vázquez
