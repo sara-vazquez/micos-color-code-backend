@@ -263,7 +263,14 @@ erDiagram
 │	                   │  └── UserServiceTest.java
 │	                   ├── MicosColorCodeApplicationTest.java
 │	                   ├── TestcontainersConfiguration.java
-│	                   └── TestMicosColorCodeApplication.java
+│	                   ├── TestMicosColorCodeApplication.java
+│					   └──resources
+│ 					   	  ├── uploads
+│  					   	  │    ├── images
+│					   	  │    └── pdfs
+│ 					   	  └── application-test.properties
+│
+│
 │                   
 ├── uploads
 │ 	├── images
