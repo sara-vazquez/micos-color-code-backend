@@ -153,6 +153,132 @@ erDiagram
 
 ## 📂 Estructura de carpetas
 
+```
+.
+├── mvn
+├── src
+│   ├── main
+│   │   ├── java
+│   │   │   └── dev
+│   │   │       └── sara
+│   │   │          └── micos_color_code	
+│	│   │              ├── auth
+│	│   │              │  ├── AuthController.java
+│	│   │              │  ├── AuthRequestDto.java
+│	│   │              │  ├── AppointmentResponseDTO.java
+│	│   │              │  ├── AuthResponseDTO.java
+│	│   │              │  ├── AuthService.java
+│	│   │              │  └── AuthServiceImpl.java
+│	│   │              ├──captcha
+│	│   │     		   │	├── CaptchaController.java
+│	│   │              │  	└── CaptchaService.java
+│	│   │              ├──config
+│	│   │     		   │	├── CorsConfig.java
+│	│   │     		   │	├── RepeatableContentCatchingRequestWrapper.java
+│	│   │     		   │	├── RequestLogginFilter.java
+│	│   │     		   │	├── SecurityConfig.java
+│	│   │              │  	└── WebConfig.java
+│	│   │              ├──feedback
+│	│   │     		   │	├── FeedbackController.java
+│	│   │     		   │	├── FeedbackRequestDTO.java
+│	│   │              │  	└── FeedbackService.java
+│	│   │              ├──means
+│	│   │              │   ├── AdminResourceController.java
+│	│   │              │   ├── AdminResourceService.java
+│	│   │              │   ├── ResourceController.java
+│	│   │              │   ├── ResourceDetailsResponseDTO.java
+│	│   │              │   ├── ResourceEntity.java
+│	│   │              │   ├── ResourceItemResponseDTO.java
+│	│   │              │   ├── ResourceMapper.java
+│	│   │              │   ├── ResourceNotFoundException.java
+│	│   │              │   ├── ResourceRepository.java
+│	│   │              │   ├── ResourceRequestDTO.java
+│	│   │              │   └── ResourceService.java
+│	│   │              ├── play
+│	│   │              │   ├── GameEntity.java
+│	│   │              │   ├── GameNotFoundException.java
+│	│   │              │   └── GameRepository.java
+│	│   │              ├── role
+│	│   │              │   ├── RoleEntity.java
+│	│   │              │   └── RoleRepository.java
+│	│   │              ├── security
+│	│   │              │   ├── CustomUserDetails.java
+│	│   │              │   ├── CustomUserDetailsService.java
+│	│   │              │   ├── JwtService.java
+│	│   │              │   ├── SecurityUtils.java
+│	│   │              │   └── UnauthorizedException.java
+│	│   │              ├── sessions
+│	│   │              │   ├── GameSessionController.java
+│	│   │              │   ├── GameSessionEntity.java
+│	│   │              │   ├── GameSessionRepository.java
+│	│   │              │   ├── GameSessionRequestDTO.java
+│	│   │              │   ├── GameSessionResponseDTO.java
+│	│   │              │   └── GameSessionService.java
+│	│   │              ├── stats
+│	│   │              │   ├── RankingPlayerDTO.java
+│	│   │              │   ├── RankingResponseDTO.java
+│	│   │              │   ├── UserGameStatsController.java
+│	│   │              │   ├── UserGameStatsEntity.java
+│	│   │              │   ├── UserGameStatsRepository.java
+│	│   │              │   └── UserGameStatsService.java
+│	│   │              ├── user
+│	│   │              │   ├── UserController.java
+│	│   │              │   ├── UserEntity.java
+│	│   │              │   ├── UserMapper.java
+│	│   │              │   ├── UserRepository.java
+│	│   │              │   ├── UserRequestDTO.java
+│	│   │              │   ├── UserResponseDTO.java
+│	│   │              │   ├── UserUpdateDTO.java
+│	│   │              │   └── UserService.java
+│	│   │              ├── util
+│	│   │              │   ├── ApiMessageDTO.java
+│	│   │              │   ├── EmailService.java
+│	│   │              │   └── EmailServiceImpl.java
+│	│   │              └── MicosColorCodeApplication.java
+│   │   └── resources
+│   │       ├── static
+│   │       ├── templates
+│   │       │   └── confirmation-email.html
+│   │       ├── application-devmysql.properties
+│   │       ├── application.properties
+│   │       └── data.sql
+│   └── test
+│       └── java
+│           └── dev
+│               └── sara
+│					└── micos_color_code
+│	                   ├── integration
+│	                   ├── unit
+│	                   │  ├── AdminResourceServiceTest.java
+│	                   │  ├── AuthServiceImplTest.java
+│	                   │  ├── CaptchaServiceTest.java
+│	                   │  ├── FeedbackServiceTest.java
+│	                   │  ├── GameSessionServiceTest.java
+│	                   │  ├── RegisterServiceImplTest.java
+│	                   │  ├── ResourceServiceTest.java
+│	                   │  ├── UserEntityTest.java
+│	                   │  ├── UserGameStatsEntityTest.java
+│	                   │  ├── UserGameStatsServiceTest.java
+│	                   │  ├── UserMapperTest.java
+│	                   │  └── UserServiceTest.java
+│	                   ├── MicosColorCodeApplicationTest.java
+│	                   ├── TestcontainersConfiguration.java
+│	                   └── TestMicosColorCodeApplication.java
+│                   
+│                   
+├── uploads
+│ 	├── images
+│ 	└── pdfs
+├── .env
+├── .gitattributes
+├── .gitignore
+├── compose.yaml
+├── mvnw
+├── mvnw.cmd
+├── pom.xml
+└── README.md
+```
+
 
 ## 🚀 Instalación y ejecución
 1. Haz fork del repositorio
