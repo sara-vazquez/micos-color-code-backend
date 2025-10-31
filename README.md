@@ -338,7 +338,7 @@ erDiagram
 
 
 ## 📯 Pruebas en Postman
-![Aquí encontrarás la colección de Postman con todas las pruebas realizadas y documentadas](https://lunar-rocket-4378638.postman.co/workspace/Micos-Color-Code~285e65ce-5ab6-47e7-b8b9-561f4583a023/collection/45994293-ef366550-d042-46ab-985c-3a5388e09d83?action=share&creator=45994293)
+[Aquí encontrarás la colección de Postman con todas las pruebas realizadas y documentadas](https://lunar-rocket-4378638.postman.co/workspace/Micos-Color-Code~285e65ce-5ab6-47e7-b8b9-561f4583a023/collection/45994293-ef366550-d042-46ab-985c-3a5388e09d83?action=share&creator=45994293)
 
 ## 📋 Funcionalidades principales del ADMIN
 ### Gestión de recursos:
