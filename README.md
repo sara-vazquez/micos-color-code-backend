@@ -248,6 +248,7 @@ erDiagram
 │               └── sara
 │					└── micos_color_code
 │	                   ├── integration
+│	                   │  ├── RegisterControllerIntegrationTest.java
 │	                   ├── unit
 │	                   │  ├── AdminResourceServiceTest.java
 │	                   │  ├── AuthServiceImplTest.java
