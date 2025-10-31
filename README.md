@@ -6,6 +6,7 @@ Con la web se pretende que mediante una forma lúdica, visual y sencilla, contin
 
 [Aquí encontrarás la documentación del proyecto ↗︎](https://www.notion.so/sara-vazquez/MICOS-PROYECTO-FINAL-23fd5565c5b68048a775fc74e9a9f749)
 
+
 ## 📓 Diagrama de clases UML
 ```mermaid
 ---
@@ -152,6 +153,7 @@ erDiagram
 
 ## 📂 Estructura de carpetas
 
+
 ## 🚀 Instalación y ejecución
 1. Haz fork del repositorio
 
@@ -184,45 +186,51 @@ erDiagram
 👉 http://localhost:8080
 
 
+
 ## 🔗 Endpoints principales
 
-1. 🔐 Authentication
+1. 🔐 **AUTENTICACIÓN**
 
-- POST http://localhost:8080/auth/login - Login (USER, ADMIN)
-- POST http://localhost:8080/auth/logout - Logout (USER, ADMIN)
-- POST http://localhost:8080/register - Registration (First user registered: role ADMIN)
-- GET http://localhost:8080/captcha/generate - Generate captcha - register (USER, ADMIN)
+	- POST http://localhost:8080/auth/login - Login (USER, ADMIN)
+	- POST http://localhost:8080/auth/logout - Logout (USER, ADMIN)
+	- POST http://localhost:8080/register - Registration (First user registered: role ADMIN)
+	- GET http://localhost:8080/captcha/generate - Generate captcha - register (USER, ADMIN)
 
-2. 📚 Resources
+2. 📚 **RECURSOS**
 
-**ADMIN**
-- GET http://localhost:8080/admin/resources - Get all resources 
-- POST http://localhost:8080/admin/resources  - Add new resources
-- PUT http://localhost:8080/admin/resources/{id} - Update a resource 
-- DEL http://localhost:8080/admin/resources/{id} - Delete a resource
+**Admin**
+	- GET http://localhost:8080/admin/resources - Get all resources 
+	- POST http://localhost:8080/admin/resources  - Add new resources
+	- PUT http://localhost:8080/admin/resources/{id} - Update a resource 
+	- DEL http://localhost:8080/admin/resources/{id} - Delete a resource
 
-**USER**
-- GET http://localhost:8080/users/resources - Get all resources
+**User**
+	- GET http://localhost:8080/users/resources - Get all resources
 
-3. 📄 Feedback
+3. 📄 **FEEDBACK**
 
-- POST http://localhost:8080/feedback - Create feedback - email service (USER)
+	- POST http://localhost:8080/feedback - Create feedback - email service (USER)
 
-4. 🎮 Games
+4. 🎮 **JUEGOS**
 
-- POST http://localhost:8080/users/play/{gameId}/sessions - Create game session (USER)
-- GET http://localhost:8080/users/play/{gameId}/ranking - Get game ranking chart (USER)
+	- POST http://localhost:8080/users/play/{gameId}/sessions - Create game session (USER)
+	- GET http://localhost:8080/users/play/{gameId}/ranking - Get game ranking chart (USER)
+
 
 
 ## 📯 Pruebas en Postman
 
 ## 📋 Funcionalidades principales del ADMIN
-
-- **Gestión de recursos:**
+### Gestión de recursos:
   - Listar 📄
   - Añadir ➕
   - Editar ✏️
   - Eliminar 🗑
 
+
 ## 🧪 Test coverage
 ![Coverage provisional de los test de back](src/assets/back-coverage.png)
+
+
+### Autora
+Sara Vázquez
