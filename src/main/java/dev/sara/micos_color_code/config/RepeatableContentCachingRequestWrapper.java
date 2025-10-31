@@ -17,10 +17,14 @@ public class RepeatableContentCachingRequestWrapper extends HttpServletRequestWr
     private final byte[] body;
 
     public RepeatableContentCachingRequestWrapper(HttpServletRequest request) throws IOException {
-        super(request);
-        InputStream inputStream = request.getInputStream();
+    super(request);
+    InputStream inputStream = request.getInputStream();
+    if (inputStream != null) {
         this.body = inputStream.readAllBytes();
+    } else {
+        this.body = new byte[0];
     }
+}
 
         @Override
     public ServletInputStream getInputStream() throws IOException {
