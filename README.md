@@ -249,6 +249,7 @@ erDiagram
 │					└── micos_color_code
 │	                   ├── integration
 │	                   │  ├── RegisterControllerIntegrationTest.java
+│	                   │  ├── AdminResourceControllerIntegrationTest.java
 │	                   ├── unit
 │	                   │  ├── AdminResourceServiceTest.java
 │	                   │  ├── AuthServiceImplTest.java
