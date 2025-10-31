@@ -198,14 +198,11 @@ erDiagram
 
 2. 📚 **RECURSOS**
 
-**Admin**
-	- GET http://localhost:8080/admin/resources - Get all resources 
-	- POST http://localhost:8080/admin/resources  - Add new resources
-	- PUT http://localhost:8080/admin/resources/{id} - Update a resource 
-	- DEL http://localhost:8080/admin/resources/{id} - Delete a resource
-
-**User**
-	- GET http://localhost:8080/users/resources - Get all resources
+	- GET http://localhost:8080/admin/resources - Get all resources (ADMIN)
+	- GET http://localhost:8080/users/resources - Get all resources (USER)
+	- POST http://localhost:8080/admin/resources  - Add new resources (ADMIN)
+	- PUT http://localhost:8080/admin/resources/{id} - Update a resource (ADMIN)
+	- DEL http://localhost:8080/admin/resources/{id} - Delete a resource (ADMIN)
 
 3. 📄 **FEEDBACK**
 
