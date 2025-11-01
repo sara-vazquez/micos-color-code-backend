@@ -151,6 +151,77 @@ erDiagram
     }
 ```
 
+## 🚀 Instalación y ejecución
+1. Haz fork del repositorio
+
+2. Crea una rama para tu feature/fix
+	 ```
+	 git checkout -b feature/nueva-funcionalidad
+	 ```
+
+3. Configura la base de datos MySQL (ver `application.properties`)
+   
+- [Consulta la guía con las instalaciones que necesitas ↗︎](https://www.notion.so/sara-vazquez/Instalaciones-back-28dd5565c5b6805e823dc9f9ec5170d9)
+
+4. Haz tus cambios y crea un pull request
+ 	 ```
+	 git commit -m "Descripción breve del cambio"
+	 git push origin feature/nueva-funcionalidad
+	 ```
+
+5. Levanta los servicios con Docker Compose:
+	 ```
+	 docker compose up -d
+	 ```
+
+6. Ejecuta la aplicación Spring Boot:
+	 ```
+	 mvn spring-boot:run
+	 ```
+
+  La aplicación se levantará en:
+👉 http://localhost:8080
+
+
+## 🔗 Endpoints principales
+
+1. 🔐 **AUTENTICACIÓN**
+
+	- POST http://localhost:8080/auth/login - Login (USER, ADMIN)
+	- POST http://localhost:8080/auth/logout - Logout (USER, ADMIN)
+	- POST http://localhost:8080/register - Registration (First user registered: role ADMIN)
+	- GET http://localhost:8080/captcha/generate - Generate captcha - register (USER, ADMIN)
+
+2. 📚 **RECURSOS**
+
+	- GET http://localhost:8080/admin/resources - Get all resources (ADMIN)
+	- GET http://localhost:8080/users/resources - Get all resources (USER)
+	- POST http://localhost:8080/admin/resources  - Add new resources (ADMIN)
+	- PUT http://localhost:8080/admin/resources/{id} - Update a resource (ADMIN)
+	- DEL http://localhost:8080/admin/resources/{id} - Delete a resource (ADMIN)
+
+3. 📄 **FEEDBACK**
+
+	- POST http://localhost:8080/feedback - Create feedback - email service (USER)
+
+4. 🎮 **JUEGOS**
+
+	- POST http://localhost:8080/users/play/{gameId}/sessions - Create game session (USER)
+	- GET http://localhost:8080/users/play/{gameId}/ranking - Get game ranking chart (USER)
+
+
+## 📯 Pruebas en Postman
+[Aquí encontrarás la colección de Postman con todas las pruebas realizadas y documentadas](https://lunar-rocket-4378638.postman.co/workspace/Micos-Color-Code~285e65ce-5ab6-47e7-b8b9-561f4583a023/collection/45994293-ef366550-d042-46ab-985c-3a5388e09d83?action=share&creator=45994293)
+
+## 📋 Funcionalidades principales del ADMIN
+### Gestión de recursos:
+  - Listar 📄
+  - Añadir ➕
+  - Editar ✏️
+  - Eliminar 🗑
+
+## 🧪 Test coverage y estructura
+![Coverage test de back](src/assets/coverage-back.png)
 <details>
     <summary>📂 Estructura de carpetas</summary>
 
@@ -290,78 +361,6 @@ erDiagram
 └── README.md
 ```
 </details>
-
-## 🚀 Instalación y ejecución
-1. Haz fork del repositorio
-
-2. Crea una rama para tu feature/fix
-	 ```
-	 git checkout -b feature/nueva-funcionalidad
-	 ```
-
-3. Configura la base de datos MySQL (ver `application.properties`)
-   
-- [Consulta la guía con las instalaciones que necesitas ↗︎](https://www.notion.so/sara-vazquez/Instalaciones-back-28dd5565c5b6805e823dc9f9ec5170d9)
-
-4. Haz tus cambios y crea un pull request
- 	 ```
-	 git commit -m "Descripción breve del cambio"
-	 git push origin feature/nueva-funcionalidad
-	 ```
-
-5. Levanta los servicios con Docker Compose:
-	 ```
-	 docker compose up -d
-	 ```
-
-6. Ejecuta la aplicación Spring Boot:
-	 ```
-	 mvn spring-boot:run
-	 ```
-
-  La aplicación se levantará en:
-👉 http://localhost:8080
-
-
-## 🔗 Endpoints principales
-
-1. 🔐 **AUTENTICACIÓN**
-
-	- POST http://localhost:8080/auth/login - Login (USER, ADMIN)
-	- POST http://localhost:8080/auth/logout - Logout (USER, ADMIN)
-	- POST http://localhost:8080/register - Registration (First user registered: role ADMIN)
-	- GET http://localhost:8080/captcha/generate - Generate captcha - register (USER, ADMIN)
-
-2. 📚 **RECURSOS**
-
-	- GET http://localhost:8080/admin/resources - Get all resources (ADMIN)
-	- GET http://localhost:8080/users/resources - Get all resources (USER)
-	- POST http://localhost:8080/admin/resources  - Add new resources (ADMIN)
-	- PUT http://localhost:8080/admin/resources/{id} - Update a resource (ADMIN)
-	- DEL http://localhost:8080/admin/resources/{id} - Delete a resource (ADMIN)
-
-3. 📄 **FEEDBACK**
-
-	- POST http://localhost:8080/feedback - Create feedback - email service (USER)
-
-4. 🎮 **JUEGOS**
-
-	- POST http://localhost:8080/users/play/{gameId}/sessions - Create game session (USER)
-	- GET http://localhost:8080/users/play/{gameId}/ranking - Get game ranking chart (USER)
-
-
-## 📯 Pruebas en Postman
-[Aquí encontrarás la colección de Postman con todas las pruebas realizadas y documentadas](https://lunar-rocket-4378638.postman.co/workspace/Micos-Color-Code~285e65ce-5ab6-47e7-b8b9-561f4583a023/collection/45994293-ef366550-d042-46ab-985c-3a5388e09d83?action=share&creator=45994293)
-
-## 📋 Funcionalidades principales del ADMIN
-### Gestión de recursos:
-  - Listar 📄
-  - Añadir ➕
-  - Editar ✏️
-  - Eliminar 🗑
-
-## 🧪 Test coverage
-![Coverage test de back](src/assets/coverage-back.png)
 
 ### Autora
 Sara Vázquez
