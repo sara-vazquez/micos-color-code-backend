@@ -151,7 +151,8 @@ erDiagram
     }
 ```
 
-## 📂 Estructura de carpetas
+<details>
+    <summary>📂 Estructura de carpetas</summary>
 
 ```
 ├── mvn
@@ -288,6 +289,7 @@ erDiagram
 ├── pom.xml
 └── README.md
 ```
+</details>
 
 ## 🚀 Instalación y ejecución
 1. Haz fork del repositorio
