@@ -5,6 +5,7 @@ MICOS es una web (mobile-first) dirigida a niños y niñas de entre 3 y 8 años 
 Con la web se pretende que mediante una forma lúdica, visual y sencilla, continúen con el aprendizaje también a través de las pantallas. 
 
 [Aquí encontrarás la documentación del proyecto ↗︎](https://www.notion.so/sara-vazquez/MICOS-PROYECTO-FINAL-23fd5565c5b68048a775fc74e9a9f749)
+[En este enlace podrás acceder a la presentación ↗︎](https://www.figma.com/slides/50blXM7DC2VcG9xuHCyYiL/micos-color-code-slides?node-id=1-614&t=jnPYgwghxAS1wwKQ-1)
 
 
 ## 📓 Diagrama de clases UML
